@@ -1,2 +1,2 @@
 # bb-giantswarm
-Inofficial GiantSwarm app for BlackBerry OS10 devices
+Inofficial [GiantSwarm](https://giantswarm.io/) app for BlackBerry OS10 devices
