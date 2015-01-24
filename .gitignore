@@ -11,7 +11,12 @@
 *.la
 *.a
 
+# Eclipse CDT
+/.cproject
+/.project
 /.settings/
+
+# Momentics IDE
 /.device
 /config.pri
 /arm/
