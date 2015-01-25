@@ -3,6 +3,7 @@ import bb.cascades 1.3
 import "Welcome"
 import "Company"
 import "Environment"
+import "Account"
 
 TabbedPane {
     tabs: [
@@ -24,7 +25,7 @@ TabbedPane {
         },
         Tab {
             title: qsTr("Account")
-            Page {}
+            AccountPage {}
         }
     ]
 }
