@@ -1,5 +1,7 @@
 import bb.cascades 1.3
 
+import "../Components"
+
 NavigationPane {
     id: navigation
     Page {
@@ -20,7 +22,9 @@ NavigationPane {
                 listItemComponents: ListItemComponent {
                     type: "item"
                     Container {
-                        Container {
+                        SpacedContainer {
+                            verticalSpacing: ui.du(1)
+                            horizontalSpacing: ui.du(2)
                             layout: StackLayout {
                                 orientation: LayoutOrientation.LeftToRight
                             }

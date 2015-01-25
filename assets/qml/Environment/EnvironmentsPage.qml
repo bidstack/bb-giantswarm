@@ -50,7 +50,8 @@ NavigationPane {
                     type: "item"
                     Container {
                         SpacedContainer {
-                            spacing: ui.du(1)
+                            verticalSpacing: ui.du(1)
+                            horizontalSpacing: ui.du(2)
                             layout: StackLayout {
                                 orientation: LayoutOrientation.LeftToRight
                             }
