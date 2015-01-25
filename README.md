@@ -1,5 +1,8 @@
 # bb-giantswarm
 
+![GiantSwarm Logo](https://raw.github.com/bidstack/bb-giantswarm/master/logos/giantswarm.png)
+![BlackBerry OS10 Logo](https://raw.github.com/bidstack/bb-giantswarm/master/logos/blackberry10.png)
+
 Inofficial [GiantSwarm](https://giantswarm.io/) app for BlackBerry OS10 devices
 
 ## Unstable
