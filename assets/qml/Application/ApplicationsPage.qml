@@ -50,6 +50,10 @@ NavigationPane {
                                     topMargin: ui.du(0)
                                 }
                             }
+                            ImageView {
+                                imageSource: "asset:///images/actions/custom/ic_next.png"
+                                verticalAlignment: VerticalAlignment.Center
+                            }
                         }
                         Divider {}
                     }

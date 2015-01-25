@@ -67,6 +67,10 @@ NavigationPane {
                                 textStyle.fontSize: FontSize.Large
                                 verticalAlignment: VerticalAlignment.Center
                             }
+                            ImageView {
+                                imageSource: "asset:///images/actions/custom/ic_next.png"
+                                verticalAlignment: VerticalAlignment.Center
+                            }
                         }
                         Divider {}
                     }
