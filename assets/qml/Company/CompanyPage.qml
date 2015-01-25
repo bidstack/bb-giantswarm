@@ -3,7 +3,7 @@ import bb.system 1.2
 
 Page {
     titleBar: TitleBar {
-        title: "geissbock"
+        title: "bidstack"
         acceptAction: ActionItem {
             title: qsTr("Refresh")
         }
