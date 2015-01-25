@@ -1,6 +1,7 @@
 import bb.cascades 1.3
 
 import "Welcome"
+import "Company"
 
 TabbedPane {
     tabs: [
@@ -10,7 +11,7 @@ TabbedPane {
         },
         Tab {
             title: qsTr("Companies")
-            Page {}
+            CompaniesPage {}
         },
         Tab {
             title: qsTr("Environments")
