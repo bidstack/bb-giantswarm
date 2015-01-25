@@ -67,24 +67,8 @@ from [BlackBerry's developer website](http://developer.blackberry.com/design/bb1
       <td><a href="http://icons8.com/web-app/361/Logout">Icons8.com</a></td>
     </tr>
     <tr>
-      <td><a href="assets/images/actions/custom/ic_next.ping">ic_next.png</a></td>
+      <td><a href="assets/images/actions/custom/ic_next.png">ic_next.png</a></td>
       <td><a href="http://icons8.com/web-app/3299/Next">Icons8.com</a></td>
     </tr>
   </tbody>
 </table>
-
-## Devices
-
-### Supported
-
-* BlackBerry Passport
-* BlackBerry Classic
-* BlackBerry P'9983 (Porsche Design)
-
-### Unsupported
-
-* BlackBerry Z10
-* BlackBerry Q10
-* BlackBerry Z30
-* BlackBerry Z3
-* BlackBerry P'9982 (Porsche Design)
