@@ -3,6 +3,7 @@ import bb.cascades 1.3
 import "../Elements"
 
 Page {
+    property variant application;
     titleBar: TitleBar {
         title: qsTr("Application")
         acceptAction: ActionItem {
@@ -25,7 +26,7 @@ Page {
             }
             Container {
                 Label {
-                    text: "bidstack-api"
+                    text: application["name"]
                     textStyle.fontSize: FontSize.Large
                     bottomMargin: ui.du(0)
                 }

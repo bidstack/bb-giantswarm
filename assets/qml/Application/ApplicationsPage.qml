@@ -58,12 +58,16 @@ NavigationPane {
                 }
                 onCreationCompleted: {
                     applicationsDataModel.insertList([
-                        { name: "bidstack-api", environment: "bidstack/staging" },
-                        { name: "giantswarm-weather", environment: "giantswarm/production" }
+                        { name: "bidstack-api", environment: "bidstack/staging", status: "up" },
+                        { name: "giantswarm-weather", environment: "giantswarm/production", status: "starting" }
                     ]);
                 }
                 onTriggered: {
-                    var application = applicationsDataModel.data(indexPath);
+                    navigation.push(Qt.createComponent(
+                        "ApplicationPage.qml"
+                    ).createObject(navigation, {
+                        application: applicationsDataModel.data(indexPath)
+                    }));
                 }
             }
         }
