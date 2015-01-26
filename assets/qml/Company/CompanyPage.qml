@@ -26,7 +26,7 @@ Page {
                     onFinished: {
                         if (result == SystemUiResult.ConfirmButtonSelection) {
                             if (true) {
-                                usersDataModel.insert({ name: value });
+                                usersDataModel.insert({ name: inputFieldTextEntry() });
                                 userHasSuccessfullyBeenAddedToast.show();
                             } else {
                                 userCouldNotBeAddedToast.show();
@@ -59,6 +59,7 @@ Page {
             listItemComponents: ListItemComponent {
                 type: "item"
                 Container {
+                    id: item
                     TwoLineListContainer {
                         layout: StackLayout {
                             orientation: LayoutOrientation.LeftToRight
@@ -88,7 +89,7 @@ Page {
                                     onFinished: {
                                         if (result == SystemUiResult.ConfirmButtonSelection) {
                                             if (true) {
-                                                usersDataModel.removeAt(ListItem.indexPath);
+                                                item.ListItem.view.dataModel.removeAt(item.ListItem.indexPath);
                                                 userHasSuccessfullyBeenRemovedToast.show();
                                             } else {
                                                 userCouldNotBeRemovedToast.show();
