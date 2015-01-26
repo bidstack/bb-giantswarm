@@ -3,6 +3,7 @@ import bb.cascades 1.3
 import "../Elements"
 
 Page {
+    property variant service;
     titleBar: TitleBar {
         title: qsTr("Service")
         acceptAction: ActionItem {
@@ -25,7 +26,7 @@ Page {
             }
             Container {
                 Label {
-                    text: "website"
+                    text: service["name"]
                     textStyle.fontSize: FontSize.Large
                     bottomMargin: ui.du(0)
                 }
@@ -40,7 +41,7 @@ Page {
                         rightMargin: ui.du(0)
                     }
                     Label {
-                        text: "starting..."
+                        text: service["status"]
                         textStyle.fontSize: FontSize.Small
                         textStyle.color: Color.create("#FF5C00")
                         leftMargin: ui.du(0)

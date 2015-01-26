@@ -54,7 +54,7 @@ Page {
         }
         ListView {
             dataModel: GroupDataModel {
-                id: componentsDataModel
+                id: servicesDataModel
                 sortingKeys: [ "name" ]
                 sortedAscending: true
                 grouping: ItemGrouping.None
@@ -87,10 +87,17 @@ Page {
                 }
             }
             onCreationCompleted: {
-                componentsDataModel.insertList([
+                servicesDataModel.insertList([
                     { name: "website" },
                     { name: "api"}
                 ]);
+            }
+            onTriggered: {
+                navigation.push(Qt.createComponent(
+                    "ServicePage.qml"
+                ).createObject(navigation, {
+                    service: servicesDataModel.data(indexPath)
+                }));
             }
         }
     }
