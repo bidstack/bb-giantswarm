@@ -43,7 +43,7 @@ NavigationPane {
                                 Label {
                                     text: ListItemData.environment
                                     verticalAlignment: VerticalAlignment.Center
-                                    textStyle.fontSize: FontSize.XSmall
+                                    textStyle.fontSize: FontSize.Small
                                     textStyle.color: Color.Gray
                                     topMargin: ui.du(0)
                                 }
