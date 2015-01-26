@@ -60,28 +60,29 @@ Page {
             }
             listItemComponents: ListItemComponent {
                 type: "item"
-                SpacedContainer {
-                    verticalSpacing: ui.du(1)
-                    horizontalSpacing: ui.du(2)
-                    layout: StackLayout {
-                        orientation: LayoutOrientation.LeftToRight
-                    }
-                    ImageView {
-                        imageSource: "asset:///images/actions/custom/ic_instance.png"
-                        verticalAlignment: VerticalAlignment.Center
-                    }
-                    Label {
-                        layoutProperties: StackLayoutProperties {
-                            spaceQuota: 1
+                Container {
+                    TwoLineListContainer {
+                        layout: StackLayout {
+                            orientation: LayoutOrientation.LeftToRight
                         }
-                        text: ListItemData.name
-                        textStyle.fontSize: FontSize.Large
-                        verticalAlignment: VerticalAlignment.Center
+                        ImageView {
+                            imageSource: "asset:///images/actions/custom/ic_instance.png"
+                            verticalAlignment: VerticalAlignment.Center
+                        }
+                        Label {
+                            layoutProperties: StackLayoutProperties {
+                                spaceQuota: 1
+                            }
+                            text: ListItemData.name
+                            textStyle.fontSize: FontSize.Large
+                            verticalAlignment: VerticalAlignment.Center
+                        }
+                        ImageView {
+                            imageSource: "asset:///images/actions/custom/ic_next.png"
+                            verticalAlignment: VerticalAlignment.Center
+                        }
                     }
-                    ImageView {
-                        imageSource: "asset:///images/actions/custom/ic_next.png"
-                        verticalAlignment: VerticalAlignment.Center
-                    }
+                    Divider {}
                 }
             }
             onCreationCompleted: {

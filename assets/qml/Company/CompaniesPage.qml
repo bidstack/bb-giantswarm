@@ -49,9 +49,7 @@ NavigationPane {
                 listItemComponents: ListItemComponent {
                     type: "item"
                     Container {
-                        SpacedContainer {
-                            verticalSpacing: ui.du(1)
-                            horizontalSpacing: ui.du(2)
+                        TwoLineListContainer {
                             layout: StackLayout {
                                 orientation: LayoutOrientation.LeftToRight
                             }

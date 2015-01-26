@@ -56,7 +56,7 @@ Page {
             listItemComponents: ListItemComponent {
                 type: "item"
                 Container {
-                    Container {
+                    TwoLineListContainer {
                         layout: StackLayout {
                             orientation: LayoutOrientation.LeftToRight
                         }
