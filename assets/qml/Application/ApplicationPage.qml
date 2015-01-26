@@ -11,7 +11,7 @@ Page {
     }
     Container {
         Header {
-            title: "Service"
+            title: qsTr("Service")
         }
         Container {
             layout: StackLayout {
@@ -37,7 +37,7 @@ Page {
                         orientation: LayoutOrientation.LeftToRight
                     }
                     Label {
-                        text: "Status:"
+                        text: qsTr("Status:")
                         textStyle.fontSize: FontSize.Small
                         textStyle.color: Color.Gray
                         rightMargin: ui.du(0)
@@ -52,7 +52,7 @@ Page {
             }
         }
         Header {
-            title: "Components"
+            title: qsTr("Components")
         }
         ListView {
             dataModel: GroupDataModel {
