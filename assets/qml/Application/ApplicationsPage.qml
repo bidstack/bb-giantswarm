@@ -58,9 +58,9 @@ NavigationPane {
                 }
                 onCreationCompleted: {
                     applicationsDataModel.insertList([
-                    { name: "bidstack-api", environment: "bidstack/staging" },
-                            { name: "giantswarm-weather", environment: "giantswarm/production" }
-                            ]);
+                        { name: "bidstack-api", environment: "bidstack/staging" },
+                        { name: "giantswarm-weather", environment: "giantswarm/production" }
+                    ]);
                 }
                 onTriggered: {
                     var application = applicationsDataModel.data(indexPath);
