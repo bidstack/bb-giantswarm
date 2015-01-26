@@ -88,9 +88,16 @@ Page {
             }
             onCreationCompleted: {
                 componentsDataModel.insertList([
-                    { name: "nginx" },
-                    { name: "rails" }
+                    { name: "nginx", status: "up" },
+                    { name: "rails", status: "up" }
                 ]);
+            }
+            onTriggered: {
+                navigation.push(Qt.createComponent(
+                    "ComponentPage.qml"
+                ).createObject(navigation, {
+                    component: componentsDataModel.data(indexPath)
+                }));
             }
         }
     }
