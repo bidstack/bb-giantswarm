@@ -1,6 +1,6 @@
 import bb.cascades 1.3
 
-import "../Components"
+import "../Elements"
 
 Page {
     titleBar: TitleBar {
