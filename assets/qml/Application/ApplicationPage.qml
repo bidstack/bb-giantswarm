@@ -41,7 +41,7 @@ Page {
                         rightMargin: ui.du(0)
                     }
                     Label {
-                        text: "starting..."
+                        text: application["status"]
                         textStyle.fontSize: FontSize.Small
                         textStyle.color: Color.create("#FF5C00")
                         leftMargin: ui.du(0)
