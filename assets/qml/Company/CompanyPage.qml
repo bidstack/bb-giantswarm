@@ -1,9 +1,12 @@
 import bb.cascades 1.3
 import bb.system 1.2
 
+import "../Elements"
+
 Page {
+    property variant company;
     titleBar: TitleBar {
-        title: "bidstack"
+        title: company["name"]
         acceptAction: ActionItem {
             title: qsTr("Refresh")
         }

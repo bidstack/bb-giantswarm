@@ -80,7 +80,11 @@ NavigationPane {
                     ]);
                 }
                 onTriggered: {
-                    var company = companiesDataModel.data(indexPath);
+                    navigation.push(Qt.createComponent(
+                        "CompanyPage.qml"
+                    ).createObject(navigation, {
+                        company: companiesDataModel.data(indexPath)
+                    }));
                 }
             }
         }
