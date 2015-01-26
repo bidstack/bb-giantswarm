@@ -51,3 +51,7 @@
 ## Account Management
 
 ![Screenshot](https://raw.github.com/bidstack/bb-giantswarm/ui-concept/screenshots/IMG_20150126_231337.png)
+
+## Active Frame
+
+![Screenshot](https://raw.github.com/bidstack/bb-giantswarm/ui-concept/screenshots/IMG_20150126_233459.png)
