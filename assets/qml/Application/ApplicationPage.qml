@@ -4,15 +4,12 @@ import "../Components"
 
 Page {
     titleBar: TitleBar {
-        title: "bidstack-api"
+        title: qsTr("Application")
         acceptAction: ActionItem {
             title: qsTr("Refresh")
         }
     }
     Container {
-        Header {
-            title: qsTr("Service")
-        }
         Container {
             layout: StackLayout {
                 orientation: LayoutOrientation.LeftToRight
@@ -22,7 +19,7 @@ Page {
             bottomPadding: ui.du(5)
             leftPadding: ui.du(5)
             ImageView {
-                imageSource: "asset:///images/actions/custom/ic_service.png"
+                imageSource: "asset:///images/actions/custom/ic_swarm.png"
                 verticalAlignment: VerticalAlignment.Center
                 rightMargin: ui.du(3)
             }
@@ -52,7 +49,7 @@ Page {
             }
         }
         Header {
-            title: qsTr("Components")
+            title: qsTr("Services")
         }
         ListView {
             dataModel: GroupDataModel {
@@ -70,7 +67,7 @@ Page {
                         orientation: LayoutOrientation.LeftToRight
                     }
                     ImageView {
-                        imageSource: "asset:///images/actions/custom/ic_component.png"
+                        imageSource: "asset:///images/actions/custom/ic_service.png"
                         verticalAlignment: VerticalAlignment.Center
                     }
                     Label {
@@ -89,9 +86,8 @@ Page {
             }
             onCreationCompleted: {
                 componentsDataModel.insertList([
-                    { name: "nginx" },
-                    { name: "rails"},
-                    { name: "mysql" }
+                    { name: "website" },
+                    { name: "api"}
                 ]);
             }
         }
