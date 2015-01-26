@@ -21,6 +21,8 @@
 #include <bb/cascades/AbstractPane>
 #include <bb/cascades/LocaleHandler>
 
+#include "activeframe.hpp"
+
 using namespace bb::cascades;
 
 ApplicationUI::ApplicationUI() : QObject()
@@ -39,6 +41,10 @@ ApplicationUI::ApplicationUI() : QObject()
 
     // initial load
     onSystemLanguageChanged();
+
+    // Application cover
+    ActiveFrame* activeFrame = new ActiveFrame();
+    Application::instance()->setCover(activeFrame);
 
     // Create scene document from main.qml asset, the parent is set
     // to ensure the document gets destroyed properly at shut down.
