@@ -68,3 +68,19 @@ from [BlackBerry's developer website](http://developer.blackberry.com/design/bb1
     </tr>
   </tbody>
 </table>
+
+## Devices
+
+### Supported
+
+* BlackBerry Passport
+* BlackBerry Classic
+* BlackBerry P'9983 (Porsche Design)
+
+### Unsupported
+
+* BlackBerry Z10
+* BlackBerry Q10
+* BlackBerry Z30
+* BlackBerry Z3
+* BlackBerry P'9982 (Porsche Design)
