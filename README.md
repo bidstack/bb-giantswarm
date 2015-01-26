@@ -9,6 +9,22 @@ Inofficial [GiantSwarm](https://giantswarm.io/) app for BlackBerry OS10 devices
 
 This repository contains unstable code! Use it at your own risk!
 
+## Devices
+
+### Supported
+
+* BlackBerry Passport
+* BlackBerry Classic
+* BlackBerry P'9983 (Porsche Design)
+
+### Unsupported
+
+* BlackBerry Z10
+* BlackBerry Q10
+* BlackBerry Z30
+* BlackBerry Z3
+* BlackBerry P'9982 (Porsche Design)
+
 ## Icons
 
 ### Official
