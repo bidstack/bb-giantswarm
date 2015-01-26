@@ -43,10 +43,8 @@ Page {
                         textStyle.color: Color.Gray
                         rightMargin: ui.du(0)
                     }
-                    Label {
-                        text: instance["status"]
-                        textStyle.fontSize: FontSize.Small
-                        textStyle.color: Color.create("#FF5C00")
+                    StatusLabel {
+                        status: instance["status"]
                         leftMargin: ui.du(0)
                     }
                 }

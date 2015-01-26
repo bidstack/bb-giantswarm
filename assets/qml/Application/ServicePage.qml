@@ -40,10 +40,8 @@ Page {
                         textStyle.color: Color.Gray
                         rightMargin: ui.du(0)
                     }
-                    Label {
-                        text: service["status"]
-                        textStyle.fontSize: FontSize.Small
-                        textStyle.color: Color.create("#FF5C00")
+                    StatusLabel {
+                        status: service["status"]
                         leftMargin: ui.du(0)
                     }
                 }
