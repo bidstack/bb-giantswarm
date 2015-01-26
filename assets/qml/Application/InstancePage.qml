@@ -3,6 +3,7 @@ import bb.cascades 1.3
 import "../Elements"
 
 Page {
+    property variant instance;
     titleBar: TitleBar {
         title: qsTr("Instance")
         acceptAction: ActionItem {
@@ -28,7 +29,7 @@ Page {
                     spaceQuota: 1
                 }
                 Label {
-                    text: "c6ef55dc-d501-4669-b175-34b5c112ba79"
+                    text: instance["name"]
                     textStyle.fontSize: FontSize.Large
                     bottomMargin: ui.du(0)
                 }
@@ -43,7 +44,7 @@ Page {
                         rightMargin: ui.du(0)
                     }
                     Label {
-                        text: "starting..."
+                        text: instance["status"]
                         textStyle.fontSize: FontSize.Small
                         textStyle.color: Color.create("#FF5C00")
                         leftMargin: ui.du(0)

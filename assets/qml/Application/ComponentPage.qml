@@ -54,7 +54,7 @@ Page {
         }
         ListView {
             dataModel: GroupDataModel {
-                id: componentsDataModel
+                id: instancesDataModel
                 sortingKeys: [ "name" ]
                 sortedAscending: true
                 grouping: ItemGrouping.None
@@ -87,11 +87,18 @@ Page {
                 }
             }
             onCreationCompleted: {
-                componentsDataModel.insertList([
-                    { name: "c6ef55dc-d501-4669-b175-34b5c112ba79" },
-                    { name: "37df40f4-fd6d-4b60-a662-d7d61ec0741c" },
-                    { name: "7a1f51cf-33b7-4a5b-b101-c943dcc8b48a" }
+                instancesDataModel.insertList([
+                    { name: "c6ef55dc-d501-4669-b175-34b5c112ba79", status: "up" },
+                    { name: "37df40f4-fd6d-4b60-a662-d7d61ec0741c", status: "starting" },
+                    { name: "7a1f51cf-33b7-4a5b-b101-c943dcc8b48a", status: "failed" }
                 ]);
+            }
+            onTriggered: {
+                navigation.push(Qt.createComponent(
+                    "InstancePage.qml"
+                ).createObject(navigation, {
+                    instance: instancesDataModel.data(indexPath)
+                }));
             }
         }
     }
