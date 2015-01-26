@@ -49,6 +49,7 @@ NavigationPane {
                 listItemComponents: ListItemComponent {
                     type: "item"
                     Container {
+                        id: item
                         TwoLineListContainer {
                             layout: StackLayout {
                                 orientation: LayoutOrientation.LeftToRight
@@ -78,7 +79,7 @@ NavigationPane {
                                         onFinished: {
                                             if (result == SystemUiResult.ConfirmButtonSelection) {
                                                 if (true) {
-                                                    environmentsDataModel.remove(ListItem.indexPath);
+                                                    item.ListItem.view.dataModel.removeAt(item.ListItem.indexPath);
                                                     environmentHasSuccessfullyBeenRemovedToast.show();
                                                 } else {
                                                     environmentCouldNotBeRemovedToast.show();
