@@ -88,8 +88,8 @@ Page {
             }
             onCreationCompleted: {
                 servicesDataModel.insertList([
-                    { name: "website" },
-                    { name: "api"}
+                    { name: "website", status: "starting" },
+                    { name: "api", status: "failed" }
                 ]);
             }
             onTriggered: {
