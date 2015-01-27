@@ -59,7 +59,6 @@ Sheet {
                     id: companyDropDown
                     label: qsTr("Company")
                     onSelectedValueChanged: {
-                        console.log("Company: " + value);
                         if (environmentTextField.text.length >= 0) {
                             createActionItem.enabled = true;
                         } else {
