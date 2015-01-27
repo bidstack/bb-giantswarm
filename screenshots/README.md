@@ -24,6 +24,10 @@
 
 ![Screenshot](https://raw.github.com/bidstack/bb-giantswarm/ui-concept/screenshots/IMG_20150126_231305.png)
 
+## New environment
+
+![Screenshot](https://raw.github.com/bidstack/bb-giantswarm/ui-concept/screenshots/IMG_20150127_205536.png)
+
 ## Remove environment
 
 ![Screenshot](https://raw.github.com/bidstack/bb-giantswarm/ui-concept/screenshots/IMG_20150126_231310.png)
