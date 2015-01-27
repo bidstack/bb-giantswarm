@@ -36,6 +36,19 @@ NavigationPane {
                 title: qsTr("Add")
                 ActionBar.placement: ActionBarPlacement.Signature
                 imageSource: "asset:///images/actions/official/ic_add.png"
+                attachedObjects: [
+                    EnvironmentCreatePage {
+                        id: environmentCreatePage
+                        onEnvironmentCreated: {
+                            environmentsDataModel.insert({
+                                name: companyName + "/" + environmentName
+                            });
+                        }
+                    }
+                ]
+                onTriggered: {
+                    environmentCreatePage.open();
+                }
             }
         ]
         Container {
@@ -109,9 +122,6 @@ NavigationPane {
                         { name: "bidstack/staging" },
                         { name: "giantswarm/production" }
                     ]);
-                }
-                onTriggered: {
-                    var company = environmentsDataModel.data(indexPath);
                 }
             }
         }
