@@ -6,7 +6,7 @@ import "../Elements"
 Page {
     property variant company;
     titleBar: TitleBar {
-        title: company["name"]
+        title: qsTr("Company")
         acceptAction: ActionItem {
             title: qsTr("Refresh")
         }
@@ -49,6 +49,31 @@ Page {
         }
     ]
     Container {
+        Container {
+            layout: StackLayout {
+                orientation: LayoutOrientation.LeftToRight
+            }
+            topPadding: ui.du(5)
+            rightPadding: ui.du(2)
+            bottomPadding: ui.du(5)
+            leftPadding: ui.du(5)
+            ImageView {
+                imageSource: "asset:///images/actions/custom/ic_company.png"
+                verticalAlignment: VerticalAlignment.Center
+                rightMargin: ui.du(3)
+            }
+            Container {
+                verticalAlignment: VerticalAlignment.Center
+                Label {
+                    text: "bidstack" //company["name"]
+                    textStyle.fontSize: FontSize.Large
+                    bottomMargin: ui.du(0)
+                }
+            }
+        }
+        Header {
+            title: qsTr("Users")
+        }
         ListView {
             dataModel: GroupDataModel {
                 id: usersDataModel
