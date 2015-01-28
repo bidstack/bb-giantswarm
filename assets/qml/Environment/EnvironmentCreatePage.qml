@@ -76,6 +76,16 @@ Sheet {
                     id: environmentTextField
                     label: qsTr("Environment")
                     text: ""
+                    input.flags: TextInputFlag.AutoCapitalizationOff
+                    validator: Validator {
+                        onValidate: {
+                            if (environmentTextField.text.match(/^[a-z0-9]+$/)) {
+                                state = ValidationState.Valid;
+                            } else {
+                                state = ValidationState.Invalid;
+                            }
+                        }
+                    }
                     onTextChanged: {
                         if ((text.length >= 0) && (companyDropDown.value.length >= 0)) {
                             createActionItem.enabled = true;

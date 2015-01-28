@@ -6,6 +6,8 @@ Container {
     property alias inputMode: textField.inputMode
     property alias hintText: textField.hintText
     property alias active: textField.enabled
+    property alias input: textField.input
+    property alias validator: textField.validator
 
     Label {
         id: label
