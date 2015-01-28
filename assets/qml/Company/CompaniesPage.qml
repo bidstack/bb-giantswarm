@@ -33,9 +33,39 @@ NavigationPane {
         }
         actions: [
             ActionItem {
-                title: qsTr("Add")
+                title: qsTr("Create")
                 ActionBar.placement: ActionBarPlacement.Signature
                 imageSource: "asset:///images/actions/official/ic_add.png"
+                attachedObjects: [
+                    SystemToast {
+                        id: companyHasSuccessfullyBeenCreatedToast
+                        body: qsTr("Company has successfully been created!")
+                    },
+                    SystemToast {
+                        id: companyCouldNotBeCreatedToast
+                        body: qsTr("Company could not be created!")
+                    },
+                    SystemPrompt {
+                        id: createCompanyPrompt
+                        title: qsTr("Create company")
+                        body: qsTr("Please enter the company name:")
+                        confirmButton.label: qsTr("Create")
+                        cancelButton.label: qsTr("Cancel")
+                        onFinished: {
+                            if (result == SystemUiResult.ConfirmButtonSelection) {
+                                if (true) {
+                                    companiesDataModel.insert({ name: inputFieldTextEntry() });
+                                    companyHasSuccessfullyBeenCreatedToast.show();
+                                } else {
+                                    companyCouldNotBeCreatedToast.show();
+                                }
+                            }
+                        }
+                    }
+                ]
+                onTriggered: {
+                    createCompanyPrompt.show();
+                }
             }
         ]
         Container {
