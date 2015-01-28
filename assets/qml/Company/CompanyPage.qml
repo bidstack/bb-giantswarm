@@ -65,7 +65,7 @@ Page {
             Container {
                 verticalAlignment: VerticalAlignment.Center
                 Label {
-                    text: "bidstack" //company["name"]
+                    text: company["name"]
                     textStyle.fontSize: FontSize.Large
                     bottomMargin: ui.du(0)
                 }
