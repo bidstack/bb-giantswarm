@@ -2,7 +2,7 @@ APP_NAME = GiantSwarm
 
 QT += network sql
 
-LIB += -lbbdata -lbbsystem
+LIBS += -lbbdata -lbbsystem
 
 CONFIG += qt warn_on cascades10
 
