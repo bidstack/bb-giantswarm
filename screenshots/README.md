@@ -16,9 +16,9 @@
 
 ![Screenshot](https://raw.github.com/bidstack/bb-giantswarm/ui-concept/screenshots/IMG_20150126_231238.png)
 
-## Company users
+## Company details
 
-![Screenshot](https://raw.github.com/bidstack/bb-giantswarm/ui-concept/screenshots/IMG_20150126_231242.png)
+![Screenshot](https://raw.github.com/bidstack/bb-giantswarm/ui-concept/screenshots/IMG_20150128_083408.png)
 
 ## Add new user to company
 
