@@ -4,9 +4,13 @@
 
 ![Screenshot](https://raw.github.com/bidstack/bb-giantswarm/ui-concept/screenshots/IMG_20150126_231231.png)
 
-## Navigation
+## Tab navigation
 
 ![Screenshot](https://raw.github.com/bidstack/bb-giantswarm/ui-concept/screenshots/IMG_20150126_231235.png)
+
+## Quick tab navigation
+
+![Screenshot](https://raw.github.com/bidstack/bb-giantswarm/ui-concept/screenshots/IMG_20150128_082554.png)
 
 ## Companies
 
