@@ -12,8 +12,6 @@
 *.a
 
 # Eclipse CDT
-/.cproject
-/.project
 /.settings/
 
 # Momentics IDE
