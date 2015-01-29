@@ -1,0 +1,3 @@
+[submodule "src/qjson4"]
+	path = src/qjson4
+	url = git@github.com:bidstack/qjson4.git
