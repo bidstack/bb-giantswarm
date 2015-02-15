@@ -1,7 +1,8 @@
 #include "giantswarmclient.hpp"
 
-GiantswarmClient::GiantswarmClient(QObject *parent) : QObject(parent) {
+using namespace Giantswarm;
 
+GiantswarmClient::GiantswarmClient(QObject *parent) : QObject(parent) {
 }
 
 /**
