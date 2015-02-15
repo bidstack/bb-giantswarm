@@ -77,7 +77,7 @@ QVariantList GiantswarmClient::getEnvironments() {
 }
 
 bool GiantswarmClient::hasEnvironments() {
-    return false;
+    return getEnvironments().size() >= 1;
 }
 
 bool GiantswarmClient::hasEnvironment(QString companyName, QString environmentName) {
