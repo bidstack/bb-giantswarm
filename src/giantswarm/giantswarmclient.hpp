@@ -5,7 +5,13 @@
 #include <QVariantList>
 #include <QVariantMap>
 
+#include "../bidstack/http/httpclient.hpp"
+#include "../bidstack/cache/abstractcacheadapter.hpp"
+
 const QString GIANTSWARM_API_URL = "http://api.giantswarm.io/v1";
+
+using namespace Bidstack::Http;
+using namespace Bidstack::Cache;
 
 namespace Giantswarm {
 
@@ -14,6 +20,9 @@ namespace Giantswarm {
 
     public:
         GiantswarmClient(QObject *parent = 0);
+
+    public:
+        void setCache(AbstractCacheAdapter *cache);
 
     public:
         Q_INVOKABLE bool login(QString email, QString password);
@@ -43,7 +52,16 @@ namespace Giantswarm {
         Q_INVOKABLE bool updatePassword(QString password);
 
     private:
+        HttpResponse* send(QString cacheKey, HttpRequest *request);
+        HttpResponse* send(HttpRequest *request);
+
+        QString generateCachableStringFromResponse(HttpResponse *response);
+        HttpResponse* generateResponseFromCachableString(QString string);
+
+    private:
         QString m_token;
+        HttpClient *m_httpclient;
+        AbstractCacheAdapter *m_cache;
     };
 
 };

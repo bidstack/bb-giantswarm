@@ -1,8 +1,19 @@
 #include "giantswarmclient.hpp"
 
+#include "../bidstack/cache/devnullcacheadapter.hpp"
+
+#include "../qjson4/QJsonDocument.h"
+#include "../qjson4/QJsonObject.h"
+#include "../qjson4/QJsonArray.h"
+#include "../qjson4/QJsonParseError.h"
+
 using namespace Giantswarm;
+using namespace Bidstack::Http;
+using namespace Bidstack::Cache;
 
 GiantswarmClient::GiantswarmClient(QObject *parent) : QObject(parent) {
+    m_httpclient = new HttpClient();
+    m_cache = new DevNullCacheAdapter();
     m_token = "";
 }
 
@@ -134,3 +145,92 @@ bool GiantswarmClient::updatePassword(QString password) {
     return false;
 }
 
+/**
+ * Caching
+ */
+
+void GiantswarmClient::setCache(AbstractCacheAdapter *cache) {
+    m_cache = cache;
+}
+
+/**
+ * HTTP handling
+ */
+
+HttpResponse* GiantswarmClient::send(QString cacheKey, HttpRequest *request) {
+    if (m_cache->has(cacheKey)) {
+        return generateResponseFromCachableString(m_cache->fetch(cacheKey));
+    }
+
+    HttpResponse *response = send(request);
+
+    if (response->isSuccessful()) {
+        m_cache->store(cacheKey, generateCachableStringFromResponse(response));
+    }
+
+    return response;
+}
+
+HttpRespnse* GiantswarmClient::send(HttpRequest *request) {
+    return m_httpclient->send(request);
+}
+
+/**
+ * Example:
+ *
+ *   {
+ *     "status": 200,
+ *     "headers": [ { "name": "Content-Type", "value": "application/json" } ],
+ *     "body": "{\"result\":\"success\"}"
+ *   }
+ *
+ */
+QString GiantswarmClient::generateCachableStringFromResponse(HttpResponse* response) {
+    QMap<QString, QString> responseHeaders = response->headers();
+
+    QJsonArray headers;
+    foreach (QString key, responseHeaders.keys()) {
+        QJsonObject header;
+        header["name"] = QJsonValue(key);
+        header["value"] = QJsonValue(responseHeaders[key]);
+        headers.append(QJsonValue(headers));
+    }
+
+    QJsonObject object;
+    object["status"] = QJsonValue(response->status());
+    object["headers"] = QJsonValue(headers);
+    object["body"] = QJsonValue(response->body()->toString());
+
+    QJsonDocument doc;
+    doc.setObject(object);
+
+    return QString(doc.toJson());
+}
+
+HttpResponse* GiantswarmClient::generateResponseFromCachableString(QString string) {
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(string.toUtf8(), &err);
+
+    if (doc.isNull()) {
+        throw "Failed to parse cached HTTP response: " + err.errorString();
+    }
+
+    QJsonObject object = doc.object();
+    QJsonArray headers = object.take("headers").toArray();
+
+    QMap<QString, QString> responseHeaders;
+    for (int i = 0; i < headers.size(); ++i) {
+        QJsonObject header = headers.at(i).toObject();
+        QString name = header.take("name").toString();
+        QString value = header.take("value").toString();
+        responseHeaders[name] = value;
+    }
+
+    HttpResponse *response = new HttpResponse(
+        object.take("status").toInt(),
+        responseHeaders,
+        new HttpBody(object.take("body").toString())
+    );
+
+    return response;
+}
