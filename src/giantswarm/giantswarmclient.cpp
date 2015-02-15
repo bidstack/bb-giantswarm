@@ -3,6 +3,7 @@
 using namespace Giantswarm;
 
 GiantswarmClient::GiantswarmClient(QObject *parent) : QObject(parent) {
+    m_token = "";
 }
 
 /**
@@ -20,7 +21,7 @@ bool GiantswarmClient::logout() {
 }
 
 bool GiantswarmClient::isLoggedIn() {
-    return false;
+    return !m_token.isEmpty();
 }
 
 /**

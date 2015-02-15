@@ -41,6 +41,9 @@ namespace Giantswarm {
 
         Q_INVOKABLE bool updateEmail(QString email);
         Q_INVOKABLE bool updatePassword(QString password);
+
+    private:
+        QString m_token;
     };
 
 };
