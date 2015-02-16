@@ -171,7 +171,7 @@ HttpResponse* GiantswarmClient::send(QString cacheKey, HttpRequest *request) {
     return response;
 }
 
-HttpRespnse* GiantswarmClient::send(HttpRequest *request) {
+HttpResponse* GiantswarmClient::send(HttpRequest *request) {
     return m_httpclient->send(request);
 }
 
