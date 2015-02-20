@@ -135,6 +135,11 @@ QVariantMap GiantswarmClient::getInstanceStatistics(QString companyName, QString
  * Account
  */
 
+QVariantMap GiantswarmClient::getUser() {
+    QVariantMap user;
+    return user;
+}
+
 bool GiantswarmClient::updateEmail(QString email) {
     Q_UNUSED(email);
     return false;

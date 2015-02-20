@@ -48,6 +48,7 @@ namespace Giantswarm {
 
         Q_INVOKABLE QVariantMap getInstanceStatistics(QString companyName, QString instanceId);
 
+        Q_INVOKABLE QVariantMap getUser();
         Q_INVOKABLE bool updateEmail(QString email);
         Q_INVOKABLE bool updatePassword(QString password);
 
