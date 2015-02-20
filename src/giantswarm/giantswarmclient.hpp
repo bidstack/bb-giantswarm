@@ -8,7 +8,7 @@
 #include "../bidstack/http/httpclient.hpp"
 #include "../bidstack/cache/abstractcacheadapter.hpp"
 
-const QString GIANTSWARM_API_URL = "http://api.giantswarm.io/v1";
+const QString GIANTSWARM_API_URL = "https://api.giantswarm.io/v1";
 
 using namespace Bidstack::Http;
 using namespace Bidstack::Cache;
