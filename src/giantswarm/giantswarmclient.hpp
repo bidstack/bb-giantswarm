@@ -45,6 +45,7 @@ namespace Giantswarm {
         Q_INVOKABLE bool deleteEnvironment(QString companyName, QString environmentName);
 
         Q_INVOKABLE QVariantMap getApplications();
+        Q_INVOKABLE QVariantMap getApplicationConfiguration(QString companyName, QString environmentName, QString applicationName);
 
         Q_INVOKABLE QVariantMap getInstanceStatistics(QString companyName, QString instanceId);
 

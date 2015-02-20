@@ -120,6 +120,14 @@ QVariantMap GiantswarmClient::getApplications() {
     return applications;
 }
 
+QVariantMap GiantswarmClient::getApplicationConfiguration(QString companyName, QString environmentName, QString applicationName) {
+    Q_UNUSED(companyName);
+    Q_UNUSED(environmentName);
+    Q_UNUSED(applicationName);
+    QVariantMap configuration;
+    return configuration;
+}
+
 /**
  * Instances
  */
