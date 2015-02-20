@@ -150,6 +150,48 @@ bool GiantswarmClient::stopApplication(QString companyName, QString environmentN
     return false;
 }
 
+bool GiantswarmClient::scaleApplicationUp(QString companyName, QString environmentName, QString applicationName, QString serviceName, QString componentName) {
+    return scaleApplicationUp(
+        companyName,
+        environmentName,
+        applicationName,
+        serviceName,
+        componentName,
+        1 // scale up by 1 instance
+    );
+}
+
+bool GiantswarmClient::scaleApplicationUp(QString companyName, QString environmentName, QString applicationName, QString serviceName, QString componentName, int count) {
+    Q_UNUSED(companyName);
+    Q_UNUSED(environmentName);
+    Q_UNUSED(applicationName);
+    Q_UNUSED(serviceName);
+    Q_UNUSED(componentName);
+    Q_UNUSED(count);
+    return false;
+}
+
+bool GiantswarmClient::scaleApplicationDown(QString companyName, QString environmentName, QString applicationName, QString serviceName, QString componentName) {
+    return scaleApplicationUp(
+        companyName,
+        environmentName,
+        applicationName,
+        serviceName,
+        componentName,
+        1 // scale down by 1 instance
+    );
+}
+
+bool GiantswarmClient::scaleApplicationDown(QString companyName, QString environmentName, QString applicationName, QString serviceName, QString componentName, int count) {
+    Q_UNUSED(companyName);
+    Q_UNUSED(environmentName);
+    Q_UNUSED(applicationName);
+    Q_UNUSED(serviceName);
+    Q_UNUSED(componentName);
+    Q_UNUSED(count);
+    return false;
+}
+
 /**
  * Instances
  */

@@ -49,6 +49,10 @@ namespace Giantswarm {
         Q_INVOKABLE QVariantMap getApplicationConfiguration(QString companyName, QString environmentName, QString applicationName);
         Q_INVOKABLE bool startApplication(QString companyName, QString environmentName, QString applicationName);
         Q_INVOKABLE bool stopApplication(QString companyName, QString environmentName, QString applicationName);
+        Q_INVOKABLE bool scaleApplicationUp(QString companyName, QString environmentName, QString applicationName, QString serviceName, QString componentName);
+        Q_INVOKABLE bool scaleApplicationUp(QString companyName, QString environmentName, QString applicationName, QString serviceName, QString componentName, int count);
+        Q_INVOKABLE bool scaleApplicationDown(QString companyName, QString environmentName, QString applicationName, QString serviceName, QString componentName);
+        Q_INVOKABLE bool scaleApplicationDown(QString companyName, QString environmentName, QString applicationName, QString serviceName, QString componentName, int count);
 
         Q_INVOKABLE QVariantMap getInstanceStatistics(QString companyName, QString instanceId);
 
