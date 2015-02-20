@@ -128,6 +128,20 @@ QVariantMap GiantswarmClient::getApplicationConfiguration(QString companyName, Q
     return configuration;
 }
 
+bool GiantswarmClient::startApplication(QString companyName, QString environmentName, QString applicationName) {
+    Q_UNUSED(companyName);
+    Q_UNUSED(environmentName);
+    Q_UNUSED(applicationName);
+    return false;
+}
+
+bool GiantswarmClient::stopApplication(QString companyName, QString environmentName, QString applicationName) {
+    Q_UNUSED(companyName);
+    Q_UNUSED(environmentName);
+    Q_UNUSED(applicationName);
+    return false;
+}
+
 /**
  * Instances
  */
