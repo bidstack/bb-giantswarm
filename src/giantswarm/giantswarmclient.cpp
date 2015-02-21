@@ -115,8 +115,10 @@ bool GiantswarmClient::deleteEnvironment(QString companyName, QString environmen
  * Applications
  */
 
-QVariantMap GiantswarmClient::getApplications(QString companyName, QString environmentName) {
-    QVariantMap applications;
+QVariantList GiantswarmClient::getApplications(QString companyName, QString environmentName) {
+    Q_UNUSED(companyName);
+    Q_UNUSED(environmentName);
+    QVariantList applications;
     return applications;
 }
 
