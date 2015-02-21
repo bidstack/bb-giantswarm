@@ -58,7 +58,7 @@ namespace Giantswarm {
 
         Q_INVOKABLE QVariantMap getUser();
         Q_INVOKABLE bool updateEmail(QString email);
-        Q_INVOKABLE bool updatePassword(QString password);
+        Q_INVOKABLE bool updatePassword(QString old_password, QString new_password);
 
         Q_INVOKABLE bool ping();
 

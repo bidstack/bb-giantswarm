@@ -217,8 +217,9 @@ bool GiantswarmClient::updateEmail(QString email) {
     return false;
 }
 
-bool GiantswarmClient::updatePassword(QString password) {
-    Q_UNUSED(password);
+bool GiantswarmClient::updatePassword(QString old_password, QString new_password) {
+    Q_UNUSED(old_password);
+    Q_UNUSED(new_password);
     return false;
 }
 
