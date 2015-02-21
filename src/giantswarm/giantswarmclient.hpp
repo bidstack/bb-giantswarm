@@ -60,6 +60,8 @@ namespace Giantswarm {
         Q_INVOKABLE bool updateEmail(QString email);
         Q_INVOKABLE bool updatePassword(QString password);
 
+        Q_INVOKABLE bool ping();
+
     private:
         HttpResponse* send(QString cacheKey, HttpRequest *request);
         HttpResponse* send(HttpRequest *request);

@@ -223,6 +223,14 @@ bool GiantswarmClient::updatePassword(QString password) {
 }
 
 /**
+ * Cluster
+ */
+
+bool GiantswarmClient::ping() {
+    return false;
+}
+
+/**
  * Caching
  */
 
