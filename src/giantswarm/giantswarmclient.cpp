@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "giantswarmclient.hpp"
 
 #include "../bidstack/cache/devnullcacheadapter.hpp"
@@ -321,4 +323,36 @@ HttpResponse* GiantswarmClient::generateResponseFromCachableString(QString strin
     );
 
     return response;
+}
+
+/**
+ * Helpers
+ */
+
+QJsonObject GiantswarmClient::extractDataAsObject(HttpResponse* response) {
+    QByteArray json = response->body()->toByteArray();
+
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(json, &err);
+
+    if (doc.isNull()) {
+        qWarning() << "Failed to parse JSON:" << err.errorString();
+        return QJsonObject();
+    }
+
+    return doc.object()["data"].toObject();
+}
+
+QJsonArray GiantswarmClient::extractDataAsArray(HttpResponse* response) {
+    QByteArray json = response->body()->toByteArray();
+
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(json, &err);
+
+    if (doc.isNull()) {
+        qWarning() << "Failed to parse JSON:" << err.errorString();
+        return QJsonArray();
+    }
+
+    return doc.object()["data"].toArray();
 }

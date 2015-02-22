@@ -6,7 +6,11 @@
 #include <QVariantMap>
 
 #include "../bidstack/http/httpclient.hpp"
+#include "../bidstack/http/httpresponse.hpp"
 #include "../bidstack/cache/abstractcacheadapter.hpp"
+
+#include "../qjson4/QJsonObject.h"
+#include "../qjson4/QJsonArray.h"
 
 const QString GIANTSWARM_API_URL = "https://api.giantswarm.io/v1";
 
@@ -68,6 +72,9 @@ namespace Giantswarm {
 
         QString generateCachableStringFromResponse(HttpResponse *response);
         HttpResponse* generateResponseFromCachableString(QString string);
+
+        QJsonObject extractDataAsObject(HttpResponse* response);
+        QJsonArray extractDataAsArray(HttpResponse* response);
 
     private:
         QString m_token;
