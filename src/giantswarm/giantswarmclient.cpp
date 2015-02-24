@@ -232,7 +232,13 @@ bool GiantswarmClient::updatePassword(QString old_password, QString new_password
  */
 
 bool GiantswarmClient::ping() {
-    return false;
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("GET");
+    request->setUrl(GIANTSWARM_API_URL + "/ping");
+
+    HttpResponse* response = send(request);
+
+    return response->body()->toString() == "\"OK\"";
 }
 
 /**
