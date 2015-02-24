@@ -253,16 +253,43 @@ HttpResponse* GiantswarmClient::send(QString cacheKey, HttpRequest *request) {
     }
 
     HttpResponse *response = send(request);
-
-    if (response->isSuccessful()) {
-        m_cache->store(cacheKey, generateCachableStringFromResponse(response));
-    }
+    m_cache->store(cacheKey, generateCachableStringFromResponse(response));
 
     return response;
 }
 
 HttpResponse* GiantswarmClient::send(HttpRequest *request) {
-    return m_httpclient->send(request);
+    QMap<QString, QString> headers;
+    headers["Accept"] = "application/json";
+    headers["User-Agent"] = "bb-giantswarm/0.0.1";
+
+    if (!m_token.isEmpty()) {
+        headers["Authorization"] = "giantswarm " + m_token;
+    }
+
+    if (!request->body()->isEmpty()) {
+        headers["Content-Type"] = "application/json";
+    }
+
+    request->setHeaders(headers);
+
+    HttpResponse* response = m_httpclient->send(request);
+
+    if (response->isForbidden()) {
+        throw "Not allowed to request URI!";
+    } else if (response->isClientError()) {
+        throw "An client error occured!";
+    } else if (response->isServerError()) {
+        throw "An server error occured!";
+    } else if (response->isRedirection()) {
+        throw "Received response contains a redirection!";
+    } else if (response->isNotFound()) {
+        throw "Requested URI does not exist!";
+    } else if (!response->isSuccessful()) {
+        throw "Unexpected response status!";
+    }
+
+    return response;
 }
 
 /**
