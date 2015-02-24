@@ -14,6 +14,13 @@
 
 const QString GIANTSWARM_API_URL = "https://api.giantswarm.io/v1";
 
+const int GIANTSWARM_STATUS_CODE_SUCCESS = 10000;
+const int GIANTSWARM_STATUS_CODE_CREATED = 10003;
+const int GIANTSWARM_STATUS_CODE_STARTED = 10004;
+const int GIANTSWARM_STATUS_CODE_STOPPED = 10005;
+const int GIANTSWARM_STATUS_CODE_UPDATED = 10006;
+const int GIANTSWARM_STATUS_CODE_DELETED = 10007;
+
 using namespace Bidstack::Http;
 using namespace Bidstack::Cache;
 
@@ -75,6 +82,8 @@ namespace Giantswarm {
 
         QJsonObject extractDataAsObject(HttpResponse* response);
         QJsonArray extractDataAsArray(HttpResponse* response);
+
+        void assertStatusCode(HttpResponse* response, int status);
 
     private:
         QString m_token;

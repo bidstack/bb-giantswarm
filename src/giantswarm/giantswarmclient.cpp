@@ -356,3 +356,22 @@ QJsonArray GiantswarmClient::extractDataAsArray(HttpResponse* response) {
 
     return doc.object()["data"].toArray();
 }
+
+/**
+ * Assertions
+ */
+
+void GiantswarmClient::assertStatusCode(HttpResponse* response, int status) {
+    QByteArray data = response->body()->toByteArray();
+
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+
+    if (doc.isNull()) {
+        throw "Could not parse JSON to check status_code: " + err.errorString();
+    }
+
+    if ((int)doc.object()["status_code"].toDouble() != status) {
+        throw "Status code mismatch!";
+    }
+}
