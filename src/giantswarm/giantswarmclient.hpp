@@ -18,8 +18,6 @@ using namespace Bidstack::Cache;
 
 namespace Giantswarm {
 
-    const QString API_URL = "https://api.giantswarm.io/v1";
-
     const int STATUS_CODE_SUCCESS = 10000;
     const int STATUS_CODE_CREATED = 10003;
     const int STATUS_CODE_STARTED = 10004;
@@ -35,6 +33,7 @@ namespace Giantswarm {
 
     public:
         void setCache(AbstractCacheAdapter *cache);
+        void setEndpoint(QString endpoint);
 
     public:
         Q_INVOKABLE bool login(QString email, QString password);
@@ -90,6 +89,7 @@ namespace Giantswarm {
 
     private:
         QString m_token;
+        QString m_endpoint;
         HttpClient *m_httpclient;
         AbstractCacheAdapter *m_cache;
     };
