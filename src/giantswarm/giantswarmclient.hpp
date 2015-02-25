@@ -13,19 +13,19 @@
 #include "../qjson4/QJsonObject.h"
 #include "../qjson4/QJsonArray.h"
 
-const QString GIANTSWARM_API_URL = "https://api.giantswarm.io/v1";
-
-const int GIANTSWARM_STATUS_CODE_SUCCESS = 10000;
-const int GIANTSWARM_STATUS_CODE_CREATED = 10003;
-const int GIANTSWARM_STATUS_CODE_STARTED = 10004;
-const int GIANTSWARM_STATUS_CODE_STOPPED = 10005;
-const int GIANTSWARM_STATUS_CODE_UPDATED = 10006;
-const int GIANTSWARM_STATUS_CODE_DELETED = 10007;
-
 using namespace Bidstack::Http;
 using namespace Bidstack::Cache;
 
 namespace Giantswarm {
+
+    const QString API_URL = "https://api.giantswarm.io/v1";
+
+    const int STATUS_CODE_SUCCESS = 10000;
+    const int STATUS_CODE_CREATED = 10003;
+    const int STATUS_CODE_STARTED = 10004;
+    const int STATUS_CODE_STOPPED = 10005;
+    const int STATUS_CODE_UPDATED = 10006;
+    const int STATUS_CODE_DELETED = 10007;
 
     class GiantswarmClient : public QObject {
         Q_OBJECT

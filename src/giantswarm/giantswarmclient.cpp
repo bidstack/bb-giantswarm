@@ -34,11 +34,11 @@ bool GiantswarmClient::login(QString email, QString password) {
 
     HttpRequest *request = new HttpRequest();
     request->setMethod("POST");
-    request->setUrl(GIANTSWARM_API_URL + "/user/" + email + "/login");
+    request->setUrl(API_URL + "/user/" + email + "/login");
     request->setBody(new HttpBody(doc.toJson()));
 
     HttpResponse *response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+    assertStatusCode(response, STATUS_CODE_SUCCESS);
 
     QJsonObject data = extractDataAsObject(response);
     m_token = data.take("Id").toString();
@@ -56,10 +56,10 @@ bool GiantswarmClient::logout() {
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("POST");
-    request->setUrl(GIANTSWARM_API_URL + "/token/logout");
+    request->setUrl(API_URL + "/token/logout");
 
     HttpResponse *response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+    assertStatusCode(response, STATUS_CODE_SUCCESS);
 
     m_token = "";
     return true;
@@ -78,10 +78,10 @@ QVariantList GiantswarmClient::getCompanies() {
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("GET");
-    request->setUrl(GIANTSWARM_API_URL + "/user/me/memberships");
+    request->setUrl(API_URL + "/user/me/memberships");
 
     HttpResponse *response = send("companies", request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+    assertStatusCode(response, STATUS_CODE_SUCCESS);
 
     QVariantList companies;
     QJsonArray data = extractDataAsArray(response);
@@ -108,11 +108,11 @@ bool GiantswarmClient::createCompany(QString companyName) {
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("POST");
-    request->setUrl(GIANTSWARM_API_URL + "/company");
+    request->setUrl(API_URL + "/company");
     request->setBody(new HttpBody(doc.toJson()));
 
     HttpResponse* response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_CREATED);
+    assertStatusCode(response, STATUS_CODE_CREATED);
 
     return true;
 }
@@ -122,10 +122,10 @@ bool GiantswarmClient::deleteCompany(QString companyName) {
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("DELETE");
-    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName);
+    request->setUrl(API_URL + "/company/" + companyName);
 
     HttpResponse* response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_DELETED);
+    assertStatusCode(response, STATUS_CODE_DELETED);
 
     return true;
 }
@@ -139,10 +139,10 @@ QVariantList GiantswarmClient::getCompanyUsers(QString companyName) {
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("GET");
-    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName);
+    request->setUrl(API_URL + "/company/" + companyName);
 
     HttpResponse* response = send("company_users", request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+    assertStatusCode(response, STATUS_CODE_SUCCESS);
 
     QJsonObject data = extractDataAsObject(response);
     QJsonArray members = data["members"].toArray();
@@ -166,11 +166,11 @@ bool GiantswarmClient::addUserToCompany(QString companyName, QString username) {
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("POST");
-    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/members/add");
+    request->setUrl(API_URL + "/company/" + companyName + "/members/add");
     request->setBody(new HttpBody(doc.toJson()));
 
     HttpResponse* response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_UPDATED);
+    assertStatusCode(response, STATUS_CODE_UPDATED);
 
     return true;
 }
@@ -186,11 +186,11 @@ bool GiantswarmClient::removeUserFromCompany(QString companyName, QString userna
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("POST");
-    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/members/remove");
+    request->setUrl(API_URL + "/company/" + companyName + "/members/remove");
     request->setBody(new HttpBody(doc.toJson()));
 
     HttpResponse* response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_UPDATED);
+    assertStatusCode(response, STATUS_CODE_UPDATED);
 
     return true;
 }
@@ -235,10 +235,10 @@ QVariantList GiantswarmClient::getApplications(QString companyName, QString envi
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("GET");
-    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/env/" + environmentName + "/app");
+    request->setUrl(API_URL + "/company/" + companyName + "/env/" + environmentName + "/app");
 
     HttpResponse* response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+    assertStatusCode(response, STATUS_CODE_SUCCESS);
 
     QJsonArray data = extractDataAsArray(response);
     QVariantList applications;
@@ -263,10 +263,10 @@ QVariantMap GiantswarmClient::getApplicationStatus(QString companyName, QString 
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("GET");
-    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/status");
+    request->setUrl(API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/status");
 
     HttpResponse* response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+    assertStatusCode(response, STATUS_CODE_SUCCESS);
 
     QJsonObject data = extractDataAsObject(response);
 
@@ -329,10 +329,10 @@ bool GiantswarmClient::startApplication(QString companyName, QString environment
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("POST");
-    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/start");
+    request->setUrl(API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/start");
 
     HttpResponse* response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_STARTED);
+    assertStatusCode(response, STATUS_CODE_STARTED);
 
     return true;
 }
@@ -342,10 +342,10 @@ bool GiantswarmClient::stopApplication(QString companyName, QString environmentN
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("POST");
-    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/stop");
+    request->setUrl(API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/stop");
 
     HttpResponse* response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_STOPPED);
+    assertStatusCode(response, STATUS_CODE_STOPPED);
 
     return true;
 }
@@ -366,10 +366,10 @@ bool GiantswarmClient::scaleApplicationUp(QString companyName, QString environme
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("POST");
-    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/service/" + serviceName + "/component/" + componentName + "/scaleup/" + QString::number(count));
+    request->setUrl(API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/service/" + serviceName + "/component/" + componentName + "/scaleup/" + QString::number(count));
 
     HttpResponse* response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_UPDATED);
+    assertStatusCode(response, STATUS_CODE_UPDATED);
 
     return true;
 }
@@ -390,10 +390,10 @@ bool GiantswarmClient::scaleApplicationDown(QString companyName, QString environ
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("POST");
-    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/service/" + serviceName + "/component/" + componentName + "/scaleup/" + QString::number(count));
+    request->setUrl(API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/service/" + serviceName + "/component/" + componentName + "/scaleup/" + QString::number(count));
 
     HttpResponse* response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_DELETED);
+    assertStatusCode(response, STATUS_CODE_DELETED);
 
     return true;
 }
@@ -407,10 +407,10 @@ QVariantMap GiantswarmClient::getInstanceStatistics(QString companyName, QString
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("GET");
-    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/instance/" + instanceId + "/stats");
+    request->setUrl(API_URL + "/company/" + companyName + "/instance/" + instanceId + "/stats");
 
     HttpResponse* response = send("", request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+    assertStatusCode(response, STATUS_CODE_SUCCESS);
 
     QJsonObject data = extractDataAsObject(response);
 
@@ -433,10 +433,10 @@ QVariantMap GiantswarmClient::getUser() {
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("GET");
-    request->setUrl(GIANTSWARM_API_URL + "/user/me");
+    request->setUrl(API_URL + "/user/me");
 
     HttpResponse* response = send("user", request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+    assertStatusCode(response, STATUS_CODE_SUCCESS);
 
     QJsonObject data = extractDataAsObject(response);
 
@@ -461,11 +461,11 @@ bool GiantswarmClient::updateEmail(QString email) {
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("POST");
-    request->setUrl(GIANTSWARM_API_URL + "/user/me/email/update");
+    request->setUrl(API_URL + "/user/me/email/update");
     request->setBody(new HttpBody(doc.toJson()));
 
     HttpResponse* response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_UPDATED);
+    assertStatusCode(response, STATUS_CODE_UPDATED);
 
     return true;
 }
@@ -484,11 +484,11 @@ bool GiantswarmClient::updatePassword(QString old_password, QString new_password
 
     HttpRequest* request = new HttpRequest();
     request->setMethod("POST");
-    request->setUrl(GIANTSWARM_API_URL + "/user/me/password/update");
+    request->setUrl(API_URL + "/user/me/password/update");
     request->setBody(new HttpBody(doc.toJson()));
 
     HttpResponse* response = send(request);
-    assertStatusCode(response, GIANTSWARM_STATUS_CODE_UPDATED);
+    assertStatusCode(response, STATUS_CODE_UPDATED);
 
     return true;
 }
@@ -500,7 +500,7 @@ bool GiantswarmClient::updatePassword(QString old_password, QString new_password
 bool GiantswarmClient::ping() {
     HttpRequest* request = new HttpRequest();
     request->setMethod("GET");
-    request->setUrl(GIANTSWARM_API_URL + "/ping");
+    request->setUrl(API_URL + "/ping");
 
     HttpResponse* response = send(request);
 
