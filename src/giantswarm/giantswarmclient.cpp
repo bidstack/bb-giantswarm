@@ -24,13 +24,45 @@ GiantswarmClient::GiantswarmClient(QObject *parent) : QObject(parent) {
  */
 
 bool GiantswarmClient::login(QString email, QString password) {
-    Q_UNUSED(email);
-    Q_UNUSED(password);
-    return false;
+    assertNotLoggedIn();
+
+    QJsonObject object;
+    object["password"] = QJsonValue(QString(password.toUtf8().toBase64()));
+
+    QJsonDocument doc;
+    doc.setObject(object);
+
+    HttpRequest *request = new HttpRequest();
+    request->setMethod("POST");
+    request->setUrl(GIANTSWARM_API_URL + "/user/" + email + "/login");
+    request->setBody(new HttpBody(doc.toJson()));
+
+    HttpResponse *response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+
+    QJsonObject data = extractDataAsObject(response);
+    m_token = data.take("Id").toString();
+
+    if (m_token.isEmpty()) {
+        qWarning() << "Could not find token in response!";
+        return false;
+    }
+
+    return true;
 }
 
 bool GiantswarmClient::logout() {
-    return false;
+    assertLoggedIn();
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("POST");
+    request->setUrl(GIANTSWARM_API_URL + "/token/logout");
+
+    HttpResponse *response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+
+    m_token = "";
+    return true;
 }
 
 bool GiantswarmClient::isLoggedIn() {
