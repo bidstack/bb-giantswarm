@@ -231,18 +231,89 @@ bool GiantswarmClient::deleteEnvironment(QString companyName, QString environmen
  */
 
 QVariantList GiantswarmClient::getApplications(QString companyName, QString environmentName) {
-    Q_UNUSED(companyName);
-    Q_UNUSED(environmentName);
+    assertLoggedIn();
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("GET");
+    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/env/" + environmentName + "/app");
+
+    HttpResponse* response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+
+    QJsonArray data = extractDataAsArray(response);
     QVariantList applications;
+
+    for (int i = 0; i < data.size(); ++i) {
+        QJsonObject item = data.takeAt(i).toObject();
+
+        QVariantMap application;
+        application["company"] = item.take("company").toString();
+        application["environment"] = item.take("env").toString();
+        application["application"] = item.take("app").toString();
+        application["created_at"] = item.take("created").toString();
+
+        applications.append(application);
+    }
+
     return applications;
 }
 
 QVariantMap GiantswarmClient::getApplicationStatus(QString companyName, QString environmentName, QString applicationName) {
-    Q_UNUSED(companyName);
-    Q_UNUSED(environmentName);
-    Q_UNUSED(applicationName);
-    QVariantMap status;
-    return status;
+    assertLoggedIn();
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("GET");
+    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/status");
+
+    HttpResponse* response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+
+    QJsonObject data = extractDataAsObject(response);
+
+    QVariantList services;
+    foreach (QJsonValue serviceElement, data["services"].toArray()) {
+        QJsonObject serviceItem = serviceElement.toObject();
+
+        QVariantList components;
+        foreach (QJsonValue componentElement, serviceItem["components"].toArray()) {
+            QJsonObject componentItem = componentElement.toObject();
+
+            QVariantList instances;
+            foreach (QJsonValue instanceElement, componentItem["instances"].toArray()) {
+                QJsonObject instanceItem = instanceElement.toObject();
+
+                QVariantMap instance;
+                instance["id"] = instanceItem["id"].toString();
+                instance["status"] = instanceItem["status"].toString();
+                instance["image"] = instanceItem["image"].toString();
+                instance["created_at"] = instanceItem["create_date"].toString();
+                instances.append(instance);
+            }
+
+            QVariantMap component;
+            component["name"] = componentItem["name"].toString();
+            component["status"] = componentItem["status"].toString();
+            component["maximum"] = componentItem.take("max").toInt();
+            component["minimum"] = componentItem.take("min").toInt();
+            component["instances"] = instances;
+            components.append(component);
+        }
+
+        QVariantMap service;
+        service["name"] = serviceItem["name"].toString();
+        service["status"] = serviceItem["status"].toString();
+        service["maximum"] = serviceItem.take("max").toInt();
+        service["minimum"] = serviceItem.take("min").toInt();
+        service["components"] = components;
+        services.append(service);
+    }
+
+    QVariantMap application;
+    application["name"] = data["name"].toString();
+    application["status"] = data["status"].toString();
+    application["services"] = services;
+
+    return application;
 }
 
 QVariantMap GiantswarmClient::getApplicationConfiguration(QString companyName, QString environmentName, QString applicationName) {
@@ -254,17 +325,29 @@ QVariantMap GiantswarmClient::getApplicationConfiguration(QString companyName, Q
 }
 
 bool GiantswarmClient::startApplication(QString companyName, QString environmentName, QString applicationName) {
-    Q_UNUSED(companyName);
-    Q_UNUSED(environmentName);
-    Q_UNUSED(applicationName);
-    return false;
+    assertLoggedIn();
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("POST");
+    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/start");
+
+    HttpResponse* response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_STARTED);
+
+    return true;
 }
 
 bool GiantswarmClient::stopApplication(QString companyName, QString environmentName, QString applicationName) {
-    Q_UNUSED(companyName);
-    Q_UNUSED(environmentName);
-    Q_UNUSED(applicationName);
-    return false;
+    assertLoggedIn();
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("POST");
+    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/stop");
+
+    HttpResponse* response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_STOPPED);
+
+    return true;
 }
 
 bool GiantswarmClient::scaleApplicationUp(QString companyName, QString environmentName, QString applicationName, QString serviceName, QString componentName) {
