@@ -320,9 +320,24 @@ bool GiantswarmClient::scaleApplicationDown(QString companyName, QString environ
  */
 
 QVariantMap GiantswarmClient::getInstanceStatistics(QString companyName, QString instanceId) {
-    Q_UNUSED(companyName);
-    Q_UNUSED(instanceId);
+    assertLoggedIn();
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("GET");
+    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/instance/" + instanceId + "/stats");
+
+    HttpResponse* response = send("", request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+
+    QJsonObject data = extractDataAsObject(response);
+
     QVariantMap statistics;
+    statistics["component"] = data["ComponentName"].toString();
+    statistics["memory_usage_mb"] = data["MemoryUsageMb"].toDouble();
+    statistics["memory_capacity_mb"] = data["MemoryCapacityMb"].toDouble();
+    statistics["memory_usage_percent"] = data["MemoryUsagePercent"].toDouble();
+    statistics["cpu_usage_percent"] = data["CpuUsagePercent"].toDouble();
+
     return statistics;
 }
 
