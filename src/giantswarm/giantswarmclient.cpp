@@ -394,6 +394,18 @@ QJsonArray GiantswarmClient::extractDataAsArray(HttpResponse* response) {
  * Assertions
  */
 
+void GiantswarmClient::assertLoggedIn() {
+    if (!isLoggedIn()) {
+        throw "You need to be logged in to use this method!";
+    }
+}
+
+void GiantswarmClient::assertNotLoggedIn() {
+    if (isLoggedIn()) {
+        throw "You need to be logged out to use this method!";
+    }
+}
+
 void GiantswarmClient::assertStatusCode(HttpResponse* response, int status) {
     QByteArray data = response->body()->toByteArray();
 

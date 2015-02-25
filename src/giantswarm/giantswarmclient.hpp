@@ -84,6 +84,8 @@ namespace Giantswarm {
         QJsonObject extractDataAsObject(HttpResponse* response);
         QJsonArray extractDataAsArray(HttpResponse* response);
 
+        void assertLoggedIn();
+        void assertNotLoggedIn();
         void assertStatusCode(HttpResponse* response, int status);
 
     private:
