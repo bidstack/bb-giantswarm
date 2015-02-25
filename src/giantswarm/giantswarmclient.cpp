@@ -279,13 +279,16 @@ bool GiantswarmClient::scaleApplicationUp(QString companyName, QString environme
 }
 
 bool GiantswarmClient::scaleApplicationUp(QString companyName, QString environmentName, QString applicationName, QString serviceName, QString componentName, int count) {
-    Q_UNUSED(companyName);
-    Q_UNUSED(environmentName);
-    Q_UNUSED(applicationName);
-    Q_UNUSED(serviceName);
-    Q_UNUSED(componentName);
-    Q_UNUSED(count);
-    return false;
+    assertLoggedIn();
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("POST");
+    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/service/" + serviceName + "/component/" + componentName + "/scaleup/" + QString::number(count));
+
+    HttpResponse* response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_UPDATED);
+
+    return true;
 }
 
 bool GiantswarmClient::scaleApplicationDown(QString companyName, QString environmentName, QString applicationName, QString serviceName, QString componentName) {
@@ -300,13 +303,16 @@ bool GiantswarmClient::scaleApplicationDown(QString companyName, QString environ
 }
 
 bool GiantswarmClient::scaleApplicationDown(QString companyName, QString environmentName, QString applicationName, QString serviceName, QString componentName, int count) {
-    Q_UNUSED(companyName);
-    Q_UNUSED(environmentName);
-    Q_UNUSED(applicationName);
-    Q_UNUSED(serviceName);
-    Q_UNUSED(componentName);
-    Q_UNUSED(count);
-    return false;
+    assertLoggedIn();
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("POST");
+    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/env/" + environmentName + "/app/" + applicationName + "/service/" + serviceName + "/component/" + componentName + "/scaleup/" + QString::number(count));
+
+    HttpResponse* response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_DELETED);
+
+    return true;
 }
 
 /**
