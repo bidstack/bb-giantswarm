@@ -74,7 +74,22 @@ bool GiantswarmClient::isLoggedIn() {
  */
 
 QVariantList GiantswarmClient::getCompanies() {
+    assertLoggedIn();
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("GET");
+    request->setUrl(GIANTSWARM_API_URL + "/user/me/memberships");
+
+    HttpResponse *response = send("companies", request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+
     QVariantList companies;
+    QJsonArray data = extractDataAsArray(response);
+
+    for (int i = 0; i < data.size(); ++i) {
+        companies.append(data.takeAt(i).toString());
+    }
+
     return companies;
 }
 
@@ -83,13 +98,36 @@ bool GiantswarmClient::hasCompanies() {
 }
 
 bool GiantswarmClient::createCompany(QString companyName) {
-    Q_UNUSED(companyName);
-    return false;
+    assertLoggedIn();
+
+    QJsonObject object;
+    object["company_id"] = QJsonValue(QString(companyName.toUtf8().toBase64()));
+
+    QJsonDocument doc;
+    doc.setObject(object);
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("POST");
+    request->setUrl(GIANTSWARM_API_URL + "/company");
+    request->setBody(new HttpBody(doc.toJson()));
+
+    HttpResponse* response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_CREATED);
+
+    return true;
 }
 
 bool GiantswarmClient::deleteCompany(QString companyName) {
-    Q_UNUSED(companyName);
-    return false;
+    assertLoggedIn();
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("DELETE");
+    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName);
+
+    HttpResponse* response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_DELETED);
+
+    return true;
 }
 
 /**
@@ -97,21 +135,64 @@ bool GiantswarmClient::deleteCompany(QString companyName) {
  */
 
 QVariantList GiantswarmClient::getCompanyUsers(QString companyName) {
-    Q_UNUSED(companyName);
+    assertLoggedIn();
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("GET");
+    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName);
+
+    HttpResponse* response = send("company_users", request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+
+    QJsonObject data = extractDataAsObject(response);
+    QJsonArray members = data["members"].toArray();
+
     QVariantList users;
+    for (int i = 0; i < members.size(); ++i) {
+        users.append(members.takeAt(i).toString());
+    }
+
     return users;
 }
 
 bool GiantswarmClient::addUserToCompany(QString companyName, QString username) {
-    Q_UNUSED(companyName);
-    Q_UNUSED(username);
-    return false;
+    assertLoggedIn();
+
+    QJsonObject object;
+    object["username"] = QJsonValue(QString(username.toUtf8().toBase64()));
+
+    QJsonDocument doc;
+    doc.setObject(object);
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("POST");
+    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/members/add");
+    request->setBody(new HttpBody(doc.toJson()));
+
+    HttpResponse* response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_UPDATED);
+
+    return true;
 }
 
 bool GiantswarmClient::removeUserFromCompany(QString companyName, QString username) {
-    Q_UNUSED(companyName);
-    Q_UNUSED(username);
-    return false;
+    assertLoggedIn();
+
+    QJsonObject object;
+    object["username"] = QJsonValue(QString(username.toUtf8().toBase64()));
+
+    QJsonDocument doc;
+    doc.setObject(object);
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("POST");
+    request->setUrl(GIANTSWARM_API_URL + "/company/" + companyName + "/members/remove");
+    request->setBody(new HttpBody(doc.toJson()));
+
+    HttpResponse* response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_UPDATED);
+
+    return true;
 }
 
 /**
