@@ -6,6 +6,7 @@
 #include <QVariantMap>
 
 #include "../bidstack/http/httpclient.hpp"
+#include "../bidstack/http/httprequest.hpp"
 #include "../bidstack/http/httpresponse.hpp"
 #include "../bidstack/cache/abstractcacheadapter.hpp"
 
