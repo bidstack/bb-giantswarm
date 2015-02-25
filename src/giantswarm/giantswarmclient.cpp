@@ -325,19 +325,68 @@ QVariantMap GiantswarmClient::getInstanceStatistics(QString companyName, QString
  */
 
 QVariantMap GiantswarmClient::getUser() {
+    assertLoggedIn();
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("GET");
+    request->setUrl(GIANTSWARM_API_URL + "/user/me");
+
+    HttpResponse* response = send("user", request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_SUCCESS);
+
+    QJsonObject data = extractDataAsObject(response);
+
     QVariantMap user;
+    user["name"] = data.take("username").toString();
+    user["email"] = data.take("email").toString();
+
     return user;
 }
 
 bool GiantswarmClient::updateEmail(QString email) {
-    Q_UNUSED(email);
-    return false;
+    assertLoggedIn();
+
+    QVariantMap user = getUser();
+
+    QJsonObject object;
+    object["old_email"] = QJsonValue(user.take("email").toString());
+    object["new_email"] = QJsonValue(email);
+
+    QJsonDocument doc;
+    doc.setObject(object);
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("POST");
+    request->setUrl(GIANTSWARM_API_URL + "/user/me/email/update");
+    request->setBody(new HttpBody(doc.toJson()));
+
+    HttpResponse* response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_UPDATED);
+
+    return true;
 }
 
 bool GiantswarmClient::updatePassword(QString old_password, QString new_password) {
-    Q_UNUSED(old_password);
-    Q_UNUSED(new_password);
-    return false;
+    assertLoggedIn();
+
+    QVariantMap user = getUser();
+
+    QJsonObject object;
+    object["old_password"] = QJsonValue(QString(old_password.toUtf8().toBase64()));
+    object["new_password"] = QJsonValue(QString(new_password.toUtf8().toBase64()));
+
+    QJsonDocument doc;
+    doc.setObject(object);
+
+    HttpRequest* request = new HttpRequest();
+    request->setMethod("POST");
+    request->setUrl(GIANTSWARM_API_URL + "/user/me/password/update");
+    request->setBody(new HttpBody(doc.toJson()));
+
+    HttpResponse* response = send(request);
+    assertStatusCode(response, GIANTSWARM_STATUS_CODE_UPDATED);
+
+    return true;
 }
 
 /**
