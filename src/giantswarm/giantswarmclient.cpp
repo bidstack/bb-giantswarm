@@ -530,7 +530,11 @@ void GiantswarmClient::setCache(AbstractCacheAdapter *cache) {
 
 HttpResponse* GiantswarmClient::send(QString cacheKey, HttpRequest *request) {
     if (m_cache->has(cacheKey)) {
-        return generateResponseFromCachableString(m_cache->fetch(cacheKey));
+        try {
+            return generateResponseFromCachableString(m_cache->fetch(cacheKey));
+        } catch (GiantswarmError e) {
+            qWarning() << "Failed to generate response from cache:" << e.errorString();
+        }
     }
 
     HttpResponse *response = send(request);
