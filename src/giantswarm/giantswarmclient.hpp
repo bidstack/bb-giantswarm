@@ -5,6 +5,8 @@
 #include <QVariantList>
 #include <QVariantMap>
 
+#include "giantswarmerror.hpp"
+
 #include "../bidstack/http/httpclient.hpp"
 #include "../bidstack/http/httprequest.hpp"
 #include "../bidstack/http/httpresponse.hpp"
@@ -86,6 +88,8 @@ namespace Giantswarm {
         void assertLoggedIn();
         void assertNotLoggedIn();
         void assertStatusCode(HttpResponse* response, int status);
+
+        void throwError(GiantswarmError::Error e);
 
     private:
         QString m_token;

@@ -557,17 +557,17 @@ HttpResponse* GiantswarmClient::send(HttpRequest *request) {
     HttpResponse* response = m_httpclient->send(request);
 
     if (response->isForbidden()) {
-        throw "Not allowed to request URI!";
+        throwError(GiantswarmError::NotAllowedToRequestURI);
     } else if (response->isClientError()) {
-        throw "An client error occured!";
+        throwError(GiantswarmError::ClientError);
     } else if (response->isServerError()) {
-        throw "An server error occured!";
+        throwError(GiantswarmError::ServerError);
     } else if (response->isRedirection()) {
-        throw "Received response contains a redirection!";
+        throwError(GiantswarmError::ResponseContainsRedirection);
     } else if (response->isNotFound()) {
-        throw "Requested URI does not exist!";
+        throwError(GiantswarmError::NotFound);
     } else if (!response->isSuccessful()) {
-        throw "Unexpected response status!";
+        throwError(GiantswarmError::UnexpectedResponseStatus);
     }
 
     return response;
@@ -610,7 +610,7 @@ HttpResponse* GiantswarmClient::generateResponseFromCachableString(QString strin
     QJsonDocument doc = QJsonDocument::fromJson(string.toUtf8(), &err);
 
     if (doc.isNull()) {
-        throw "Failed to parse cached HTTP response: " + err.errorString();
+        throwError(GiantswarmError::InvalidJsonFromCache);
     }
 
     QJsonObject object = doc.object();
@@ -671,13 +671,13 @@ QJsonArray GiantswarmClient::extractDataAsArray(HttpResponse* response) {
 
 void GiantswarmClient::assertLoggedIn() {
     if (!isLoggedIn()) {
-        throw "You need to be logged in to use this method!";
+        throwError(GiantswarmError::LoginRequired);
     }
 }
 
 void GiantswarmClient::assertNotLoggedIn() {
     if (isLoggedIn()) {
-        throw "You need to be logged out to use this method!";
+        throwError(GiantswarmError::LogoutRequired);
     }
 }
 
@@ -688,10 +688,20 @@ void GiantswarmClient::assertStatusCode(HttpResponse* response, int status) {
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
 
     if (doc.isNull()) {
-        throw "Could not parse JSON to check status_code: " + err.errorString();
+        throwError(GiantswarmError::InvalidJsonFromAPI);
     }
 
     if ((int)doc.object()["status_code"].toDouble() != status) {
-        throw "Status code mismatch!";
+        throwError(GiantswarmError::ResponseStatusMismatch);
     }
+}
+
+/**
+ * Exceptions
+ */
+
+void GiantswarmClient::throwError(GiantswarmError::Error e) {
+    GiantswarmError err;
+    err.error = e;
+    throw err;
 }
