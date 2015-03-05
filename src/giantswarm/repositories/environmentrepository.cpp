@@ -7,7 +7,7 @@
 using namespace Giantswarm::Repositories;
 
 EnvironmentRepository::EnvironmentRepository(QSqlDatabase& database, QObject *parent) : GiantswarmRepository(database, parent) {
-
+    init();
 }
 
 bool EnvironmentRepository::add(QString companyName, QString environmentName) {
