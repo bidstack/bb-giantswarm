@@ -1,0 +1,3 @@
+[submodule "src/bidstack/giantswarm"]
+	path = src/bidstack/giantswarm
+	url = git@github.com:bidstack/bidstack-giantswarm.git
