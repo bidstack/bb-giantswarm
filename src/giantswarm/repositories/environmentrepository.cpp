@@ -138,7 +138,7 @@ QVariantList EnvironmentRepository::all() {
 
 void EnvironmentRepository::init() {
     const QString sql =
-        "CREATE TABLE IT NOT EXISTS environments ("
+        "CREATE TABLE IF NOT EXISTS environments ("
             "id INTEGER PRIMARY KEY, "
             "name CHAR(100) NOT NULL, "
             "company_name CHAR(100) NOT NULL"
