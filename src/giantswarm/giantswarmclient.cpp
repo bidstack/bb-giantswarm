@@ -512,7 +512,7 @@ bool GiantswarmClient::ping() {
 
     HttpResponse* response = send(request);
 
-    return response->body()->toString() == "\"OK\"";
+    return response->body()->toString() == "\"OK\"\n";
 }
 
 /**
