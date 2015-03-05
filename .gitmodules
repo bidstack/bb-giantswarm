@@ -1,0 +1,9 @@
+[submodule "src/qjson4"]
+	path = src/qjson4
+	url = git@github.com:bidstack/qjson4.git
+[submodule "src/bidstack/http"]
+	path = src/bidstack/http
+	url = git@github.com:bidstack/bidstack-http.git
+[submodule "src/bidstack/cache"]
+	path = src/bidstack/cache
+	url = git@github.com:bidstack/bidstack-cache.git
