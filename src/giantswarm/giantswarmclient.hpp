@@ -6,6 +6,7 @@
 #include <QVariantMap>
 
 #include "giantswarmerror.hpp"
+#include "repositories/environmentrepository.hpp"
 
 #include "../bidstack/http/httpclient.hpp"
 #include "../bidstack/http/httprequest.hpp"
@@ -14,6 +15,8 @@
 
 #include "../qjson4/QJsonObject.h"
 #include "../qjson4/QJsonArray.h"
+
+using namespace Giantswarm::Repositories;
 
 using namespace Bidstack::Http;
 using namespace Bidstack::Cache;
@@ -31,7 +34,7 @@ namespace Giantswarm {
         Q_OBJECT
 
     public:
-        GiantswarmClient(QObject *parent = 0);
+        GiantswarmClient(QSqlDatabase& database, QObject *parent = 0);
 
     public:
         void setCache(AbstractCacheAdapter *cache);
@@ -96,6 +99,7 @@ namespace Giantswarm {
         QString m_endpoint;
         HttpClient *m_httpclient;
         AbstractCacheAdapter *m_cache;
+        EnvironmentRepository *m_environments;
     };
 
 };

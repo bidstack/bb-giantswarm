@@ -10,13 +10,16 @@
 #include "../qjson4/QJsonParseError.h"
 
 using namespace Giantswarm;
+using namespace Giantswarm::Repositories;
+
 using namespace Bidstack::Http;
 using namespace Bidstack::Cache;
 
-GiantswarmClient::GiantswarmClient(QObject *parent) : QObject(parent) {
+GiantswarmClient::GiantswarmClient(QSqlDatabase& database, QObject *parent) : QObject(parent) {
     m_endpoint = "https://api.giantswarm.io/v1";
     m_httpclient = new HttpClient();
     m_cache = new DevNullCacheAdapter();
+    m_environments = new EnvironmentRepository(database);
     m_token = "";
 }
 
@@ -209,8 +212,7 @@ bool GiantswarmClient::removeUserFromCompany(QString companyName, QString userna
  */
 
 QVariantList GiantswarmClient::getEnvironments() {
-    QVariantList environments;
-    return environments;
+    return m_environments->all();
 }
 
 bool GiantswarmClient::hasEnvironments() {
@@ -218,21 +220,18 @@ bool GiantswarmClient::hasEnvironments() {
 }
 
 bool GiantswarmClient::hasEnvironment(QString companyName, QString environmentName) {
-    Q_UNUSED(companyName);
-    Q_UNUSED(environmentName);
-    return false;
+    return m_environments->has(companyName, environmentName);
 }
 
 bool GiantswarmClient::createEnvironment(QString companyName, QString environmentName) {
-    Q_UNUSED(companyName);
-    Q_UNUSED(environmentName);
-    return false;
+    if (!hasEnvironment(companyName, environmentName)) {
+        return m_environments->add(companyName, environmentName);
+    }
+    return true;
 }
 
 bool GiantswarmClient::deleteEnvironment(QString companyName, QString environmentName) {
-    Q_UNUSED(companyName);
-    Q_UNUSED(environmentName);
-    return false;
+    return m_environments->remove(companyName, environmentName);
 }
 
 /**
