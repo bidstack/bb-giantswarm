@@ -21,7 +21,11 @@
 #include <bb/cascades/AbstractPane>
 #include <bb/cascades/LocaleHandler>
 
+#include "bidstack/giantswarm/giantswarmclient.hpp"
+
 using namespace bb::cascades;
+
+using namespace Bidstack::Giantswarm;
 
 ApplicationUI::ApplicationUI() : QObject()
 {
@@ -39,6 +43,13 @@ ApplicationUI::ApplicationUI() : QObject()
 
     // initial load
     onSystemLanguageChanged();
+
+    QSqlDatabase connection = QSqlDatabase::addDatabase("QSQLITE", "giantswarm");
+    connection.setDatabaseName("./data/giantswarm.db");
+    connection.open();
+
+    GiantswarmClient giantswarm(connection);
+    qDebug() << "Ping:" << (giantswarm.ping() ? "successful" : "failed");
 
     // Create scene document from main.qml asset, the parent is set
     // to ensure the document gets destroyed properly at shut down.
