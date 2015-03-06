@@ -4,7 +4,7 @@ import bb.system 1.2
 import "../Elements"
 
 NavigationPane {
-    id: navigation
+    id: nav
 
     signal finished();
 
@@ -45,7 +45,7 @@ NavigationPane {
                             if (false) {
                                 // TODO: Open environments wizard
                             } else {
-                                navigation.finished();
+                                nav.finished();
                             }
                         }
                     }

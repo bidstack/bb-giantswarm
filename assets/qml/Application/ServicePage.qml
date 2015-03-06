@@ -91,9 +91,9 @@ Page {
                 ]);
             }
             onTriggered: {
-                navigation.push(Qt.createComponent(
+                nav.push(Qt.createComponent(
                     "ComponentPage.qml"
-                ).createObject(navigation, {
+                ).createObject(nav, {
                     component: componentsDataModel.data(indexPath)
                 }));
             }

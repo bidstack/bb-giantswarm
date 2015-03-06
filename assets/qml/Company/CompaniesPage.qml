@@ -4,7 +4,7 @@ import bb.system 1.2
 import "../Elements"
 
 NavigationPane {
-    id: navigation
+    id: nav
     Page {
         titleBar: TitleBar {
             title: qsTr("Companies")
@@ -110,9 +110,9 @@ NavigationPane {
                     ]);
                 }
                 onTriggered: {
-                    navigation.push(Qt.createComponent(
+                    nav.push(Qt.createComponent(
                         "CompanyPage.qml"
-                    ).createObject(navigation, {
+                    ).createObject(nav, {
                         company: companiesDataModel.data(indexPath)
                     }));
                 }

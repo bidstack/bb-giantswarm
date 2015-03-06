@@ -91,9 +91,9 @@ Page {
                 ]);
             }
             onTriggered: {
-                navigation.push(Qt.createComponent(
+                nav.push(Qt.createComponent(
                     "ServicePage.qml"
-                ).createObject(navigation, {
+                ).createObject(nav, {
                     service: servicesDataModel.data(indexPath)
                 }));
             }

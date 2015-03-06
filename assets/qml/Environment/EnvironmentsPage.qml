@@ -4,7 +4,7 @@ import bb.system 1.2
 import "../Elements"
 
 NavigationPane {
-    id: navigation
+    id: nav
     Page {
         titleBar: TitleBar {
             title: qsTr("Environments")

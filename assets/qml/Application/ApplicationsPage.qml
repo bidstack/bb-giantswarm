@@ -3,7 +3,7 @@ import bb.cascades 1.4
 import "../Elements"
 
 NavigationPane {
-    id: navigation
+    id: nav
     Page {
         titleBar: TitleBar {
             title: qsTr("Applications")
@@ -63,9 +63,9 @@ NavigationPane {
                     ]);
                 }
                 onTriggered: {
-                    navigation.push(Qt.createComponent(
+                    nav.push(Qt.createComponent(
                         "ApplicationPage.qml"
-                    ).createObject(navigation, {
+                    ).createObject(nav, {
                         application: applicationsDataModel.data(indexPath)
                     }));
                 }

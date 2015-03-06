@@ -92,9 +92,9 @@ Page {
                 ]);
             }
             onTriggered: {
-                navigation.push(Qt.createComponent(
+                nav.push(Qt.createComponent(
                     "InstancePage.qml"
-                ).createObject(navigation, {
+                ).createObject(nav, {
                     instance: instancesDataModel.data(indexPath)
                 }));
             }
