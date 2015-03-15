@@ -25,7 +25,12 @@ Page {
                     confirmButton.label: qsTr("Add")
                     onFinished: {
                         if (result == SystemUiResult.ConfirmButtonSelection) {
-                            if (true) {
+                            var added = giantswarm.addUserToCompany(
+                                company["name"],      // company name
+                                inputFieldTextEntry() // name of user
+                            );
+
+                            if (added) {
                                 usersDataModel.insert({ name: inputFieldTextEntry() });
                                 userHasSuccessfullyBeenAddedToast.show();
                             } else {
@@ -113,7 +118,12 @@ Page {
                                     confirmButton.label: qsTr("Yes")
                                     onFinished: {
                                         if (result == SystemUiResult.ConfirmButtonSelection) {
-                                            if (true) {
+                                            var removed = giantswarm.removeUserFromCompany(
+                                                company["name"],  // company name
+                                                ListItemData.name // name of user
+                                            );
+
+                                            if (removed) {
                                                 item.ListItem.view.dataModel.removeAt(item.ListItem.indexPath);
                                                 userHasSuccessfullyBeenRemovedToast.show();
                                             } else {
@@ -140,10 +150,11 @@ Page {
                 }
             }
             onCreationCompleted: {
-                usersDataModel.insertList([
-                    { name: "jan.pieper" },
-                    { name: "support" }
-                ]);
+                usersDataModel.insertList(giantswarm.getCompanyUsers(
+                    company["name"]
+                ).map(function (username) {
+                    return { name: username };
+                }));
             }
         }
     }
