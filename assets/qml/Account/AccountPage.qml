@@ -34,7 +34,7 @@ Page {
                 label: qsTr("Username")
                 inputMode: TextFieldInputMode.Text
                 hintText: qsTr("Enter your username here")
-                text: "bidstack"
+                text: ""
                 active: false
             }
         }
@@ -44,7 +44,7 @@ Page {
                 label: qsTr("Email")
                 inputMode: TextFieldInputMode.EmailAddress
                 hintText: qsTr("Enter your email here")
-                text: "info@bidstack.io"
+                text: ""
                 active: false
             }
         }
@@ -57,5 +57,10 @@ Page {
                 text: ""
             }
         }
+    }
+    onCreationCompleted: {
+        var user = giantswarm.getUser();
+        emailTextField.text = user["email"];
+        usernameTextField.text = user["name"];
     }
 }
