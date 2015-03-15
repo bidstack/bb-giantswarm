@@ -20,7 +20,7 @@ Page {
                 horizontalAlignment: HorizontalAlignment.Center
             }
             Label {
-                text: "0.10.2-beta"
+                text: "0.15.0-beta"
                 textStyle.fontSize: FontSize.XSmall
                 textStyle.color: Color.Red
                 topMargin: ui.du(0)
