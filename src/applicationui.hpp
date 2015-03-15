@@ -42,6 +42,7 @@ public:
     virtual ~ApplicationUI() {}
 private slots:
     void onSystemLanguageChanged();
+    void onSetupFinished();
 private:
     QTranslator* m_pTranslator;
     bb::cascades::LocaleHandler* m_pLocaleHandler;

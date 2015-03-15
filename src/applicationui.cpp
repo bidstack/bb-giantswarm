@@ -21,7 +21,13 @@
 #include <bb/cascades/AbstractPane>
 #include <bb/cascades/LocaleHandler>
 
+#include <bb/system/SystemToast>
+#include <bb/system/SystemUiPosition>
+
+#include "activeframe.hpp"
+
 using namespace bb::cascades;
+using namespace bb::system;
 
 ApplicationUI::ApplicationUI() : QObject()
 {
@@ -40,12 +46,23 @@ ApplicationUI::ApplicationUI() : QObject()
     // initial load
     onSystemLanguageChanged();
 
+    // Application cover
+    ActiveFrame* activeFrame = new ActiveFrame();
+    Application::instance()->setCover(activeFrame);
+
     // Create scene document from main.qml asset, the parent is set
     // to ensure the document gets destroyed properly at shut down.
-    QmlDocument *qml = QmlDocument::create("asset:///qml/main.qml").parent(this);
 
-    // Create root object for the UI
-    AbstractPane *root = qml->createRootObject<AbstractPane>();
+    AbstractPane *root;
+
+    if (false) {
+        QmlDocument *qml = QmlDocument::create("asset:///qml/main.qml").parent(this);
+        root = qml->createRootObject<AbstractPane>();
+    } else {
+        QmlDocument *qml = QmlDocument::create("asset:///qml/Login/LoginPage.qml").parent(this);
+        root = qml->createRootObject<AbstractPane>();
+        qml->connect(root, SIGNAL(finished()), this, SLOT(onSetupFinished()));
+    }
 
     // Set created root object as the application scene
     Application::instance()->setScene(root);
@@ -62,4 +79,16 @@ void ApplicationUI::onSystemLanguageChanged()
     if (m_pTranslator->load(file_name, "app/native/qm")) {
         QCoreApplication::instance()->installTranslator(m_pTranslator);
     }
+}
+
+void ApplicationUI::onSetupFinished()
+{
+    QmlDocument *qml = QmlDocument::create("asset:///qml/main.qml").parent(this);
+    AbstractPane *root = qml->createRootObject<AbstractPane>();
+    Application::instance()->setScene(root);
+
+    SystemToast *toast = new SystemToast(this);
+    toast->setBody(tr("Happy swarming!"));
+    toast->setPosition(SystemUiPosition::BottomCenter);
+    toast->show();
 }

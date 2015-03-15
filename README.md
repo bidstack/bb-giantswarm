@@ -66,5 +66,9 @@ from [BlackBerry's developer website](http://developer.blackberry.com/design/bb1
       <td><a href="assets/images/actions/custom/ic_logout.png">ic_logout.png</a></td>
       <td><a href="http://icons8.com/web-app/361/Logout">Icons8.com</a></td>
     </tr>
+    <tr>
+      <td><a href="assets/images/actions/custom/ic_next.png">ic_next.png</a></td>
+      <td><a href="http://icons8.com/web-app/3299/Next">Icons8.com</a></td>
+    </tr>
   </tbody>
 </table>
