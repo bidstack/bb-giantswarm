@@ -8,6 +8,7 @@ Page {
         title: qsTr("Account")
         acceptAction: ActionItem {
             title: qsTr("Save")
+            enabled: false // TODO: New API method needed to update both (email & password)
             attachedObjects: [
                 SystemToast {
                     id: accountCouldNotBeSavedToast
