@@ -41,11 +41,29 @@ NavigationPane {
 
                     Button {
                         text: qsTr("Login")
+                        attachedObjects: [
+                            SystemToast {
+                                id: emailOrPasswordMissingToast
+                                body: qsTr("Email and/or password missing!")
+                            },
+                            SystemToast {
+                                id: loginFailedToast
+                                body: "Login failed! Please check your credentials and try again!"
+                            }
+                        ]
                         onClicked: {
-                            if (false) {
-                                // TODO: Open environments wizard
+                            var email = emailTextField.text
+                              , password = passwordTextField.text;
+
+                            if (email && password) {
+                                if (giantswarm.login(email, password)) {
+                                    // TODO: Open environments wizard
+                                    nav.finished();
+                                } else {
+                                    loginFailedToast.show();
+                                }
                             } else {
-                                nav.finished();
+                                emailOrPasswordMissingToast.show();
                             }
                         }
                     }
