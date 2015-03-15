@@ -57,22 +57,25 @@ ApplicationUI::ApplicationUI() : QObject()
     connection.setDatabaseName("./data/giantswarm.db");
     connection.open();
 
-    GiantswarmClient giantswarm(connection);
-    qDebug() << "Ping:" << (giantswarm.ping() ? "successful" : "failed");
+    GiantswarmClient *giantswarm = new GiantswarmClient(connection);
+    qDebug() << "Ping:" << (giantswarm->ping() ? "successful" : "failed");
 
     // Create scene document from main.qml asset, the parent is set
     // to ensure the document gets destroyed properly at shut down.
 
     AbstractPane *root;
+    QmlDocument *qml;
 
     if (false) {
-        QmlDocument *qml = QmlDocument::create("asset:///qml/main.qml").parent(this);
+        qml = QmlDocument::create("asset:///qml/main.qml").parent(this);
         root = qml->createRootObject<AbstractPane>();
     } else {
-        QmlDocument *qml = QmlDocument::create("asset:///qml/Login/LoginPage.qml").parent(this);
+        qml = QmlDocument::create("asset:///qml/Login/LoginPage.qml").parent(this);
         root = qml->createRootObject<AbstractPane>();
         qml->connect(root, SIGNAL(finished()), this, SLOT(onSetupFinished()));
     }
+
+    qml->setContextProperty("giantswarm", giantswarm);
 
     // Set created root object as the application scene
     Application::instance()->setScene(root);
