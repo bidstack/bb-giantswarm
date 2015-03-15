@@ -91,7 +91,16 @@ NavigationPane {
                                         confirmButton.label: qsTr("Yes")
                                         onFinished: {
                                             if (result == SystemUiResult.ConfirmButtonSelection) {
-                                                if (true) {
+                                                var parts = ListItemData.name.split("/")
+                                                  , companyName = parts[0]
+                                                  , environmentName = parts[1];
+
+                                                var deleted = giantswarm.deleteEnvironment(
+                                                    companyName,
+                                                    environmentName
+                                                );
+
+                                                if (deleted) {
                                                     item.ListItem.view.dataModel.removeAt(item.ListItem.indexPath);
                                                     environmentHasSuccessfullyBeenRemovedToast.show();
                                                 } else {
@@ -118,10 +127,11 @@ NavigationPane {
                     }
                 }
                 onCreationCompleted: {
-                    environmentsDataModel.insertList([
-                        { name: "bidstack/staging" },
-                        { name: "giantswarm/production" }
-                    ]);
+                    environmentsDataModel.insertList(
+                        giantswarm.getEnvironments().map(function (environmentName) {
+                            return { name: environmentName };
+                        })
+                    );
                 }
             }
         }
