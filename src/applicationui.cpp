@@ -25,7 +25,6 @@
 #include <bb/system/SystemUiPosition>
 
 #include "activeframe.hpp"
-#include "bidstack/giantswarm/giantswarmclient.hpp"
 
 using namespace bb::cascades;
 using namespace bb::system;
@@ -34,9 +33,13 @@ using namespace Bidstack::Giantswarm;
 
 ApplicationUI::ApplicationUI() : QObject()
 {
-    // prepare the localization
+    QSqlDatabase connection = QSqlDatabase::addDatabase("QSQLITE", "giantswarm");
+    connection.setDatabaseName("./data/giantswarm.db");
+    connection.open();
+
     m_pTranslator = new QTranslator(this);
     m_pLocaleHandler = new LocaleHandler(this);
+    m_giantswarm = new GiantswarmClient(connection);
 
     bool res = QObject::connect(
         m_pLocaleHandler, SIGNAL(systemLanguageChanged()),
@@ -53,13 +56,6 @@ ApplicationUI::ApplicationUI() : QObject()
     ActiveFrame* activeFrame = new ActiveFrame();
     Application::instance()->setCover(activeFrame);
 
-    QSqlDatabase connection = QSqlDatabase::addDatabase("QSQLITE", "giantswarm");
-    connection.setDatabaseName("./data/giantswarm.db");
-    connection.open();
-
-    GiantswarmClient *giantswarm = new GiantswarmClient(connection);
-    qDebug() << "Ping:" << (giantswarm->ping() ? "successful" : "failed");
-
     // Create scene document from main.qml asset, the parent is set
     // to ensure the document gets destroyed properly at shut down.
 
@@ -75,7 +71,7 @@ ApplicationUI::ApplicationUI() : QObject()
         qml->connect(root, SIGNAL(finished()), this, SLOT(onSetupFinished()));
     }
 
-    qml->setContextProperty("giantswarm", giantswarm);
+    qml->setContextProperty("giantswarm", m_giantswarm);
 
     // Set created root object as the application scene
     Application::instance()->setScene(root);
@@ -97,6 +93,8 @@ void ApplicationUI::onSystemLanguageChanged()
 void ApplicationUI::onSetupFinished()
 {
     QmlDocument *qml = QmlDocument::create("asset:///qml/main.qml").parent(this);
+    qml->setContextProperty("giantswarm", m_giantswarm);
+
     AbstractPane *root = qml->createRootObject<AbstractPane>();
     Application::instance()->setScene(root);
 
