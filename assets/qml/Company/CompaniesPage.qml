@@ -104,10 +104,11 @@ NavigationPane {
                     }
                 }
                 onCreationCompleted: {
-                    companiesDataModel.insertList([
-                        { name: "bidstack" },
-                        { name: "giantswarm" }
-                    ]);
+                    companiesDataModel.insertList(
+                        giantswarm.getCompanies().map(function (companyName) {
+                            return { name: companyName };
+                        }
+                    ));
                 }
                 onTriggered: {
                     nav.push(Qt.createComponent(
