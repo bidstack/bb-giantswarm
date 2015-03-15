@@ -57,10 +57,15 @@ NavigationPane {
                     }
                 }
                 onCreationCompleted: {
-                    applicationsDataModel.insertList([
-                        { name: "bidstack-api", environment: "bidstack/staging", status: "up" },
-                        { name: "giantswarm-weather", environment: "giantswarm/production", status: "starting" }
-                    ]);
+                    applicationsDataModel.insertList(
+                        giantswarm.getApplications().map(function (application) {
+                            return {
+                                name: application["application"],
+                                environment: application["environment"],
+                                status: "unknown" // TODO
+                            };
+                        })
+                    );
                 }
                 onTriggered: {
                     navigation.push(Qt.createComponent(
