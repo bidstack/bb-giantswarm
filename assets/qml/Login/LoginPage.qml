@@ -12,6 +12,12 @@ NavigationPane {
         Container {
             layout: DockLayout {}
             Container {
+                function checkAndSetLoginButtonStatus() {
+                    var emailIsGiven = emailTextField.text.length > 0
+                      , passwordIsGiven = passwordTextField.text.length > 0;
+
+                    loginButton.enabled = emailIsGiven && passwordIsGiven;
+                }
                 verticalAlignment: VerticalAlignment.Center
                 horizontalAlignment: HorizontalAlignment.Center
                 ImageView {
@@ -26,6 +32,7 @@ NavigationPane {
                         inputMode: TextFieldInputMode.EmailAddress
                         label: qsTr("Email")
                         hintText: qsTr("Enter your email here")
+                        onTextChanged: checkAndSetLoginButtonStatus()
                     }
                 }
                 SpacedContainer {
@@ -34,18 +41,17 @@ NavigationPane {
                         inputMode: TextFieldInputMode.Password
                         label: qsTr("Password")
                         hintText: qsTr("Enter your password here")
+                        onTextChanged: checkAndSetLoginButtonStatus()
                     }
                 }
                 SpacedContainer {
                     horizontalAlignment: HorizontalAlignment.Center
 
                     Button {
+                        id: loginButton
                         text: qsTr("Login")
+                        enabled: false
                         attachedObjects: [
-                            SystemToast {
-                                id: emailOrPasswordMissingToast
-                                body: qsTr("Email and/or password missing!")
-                            },
                             SystemToast {
                                 id: loginFailedToast
                                 body: "Login failed! Please check your credentials and try again!"
@@ -55,15 +61,11 @@ NavigationPane {
                             var email = emailTextField.text
                               , password = passwordTextField.text;
 
-                            if (email && password) {
-                                if (giantswarm.login(email, password)) {
-                                    // TODO: Open environments wizard
-                                    nav.finished();
-                                } else {
-                                    loginFailedToast.show();
-                                }
+                            if (giantswarm.login(email, password)) {
+                                // TODO: Open environments wizard
+                                nav.finished();
                             } else {
-                                emailOrPasswordMissingToast.show();
+                                loginFailedToast.show();
                             }
                         }
                     }
