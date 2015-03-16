@@ -18,6 +18,7 @@ NavigationPane {
 
                     loginButton.enabled = emailIsGiven && passwordIsGiven;
                 }
+                id: formContainer
                 verticalAlignment: VerticalAlignment.Center
                 horizontalAlignment: HorizontalAlignment.Center
                 ImageView {
@@ -32,7 +33,7 @@ NavigationPane {
                         inputMode: TextFieldInputMode.EmailAddress
                         label: qsTr("Email")
                         hintText: qsTr("Enter your email here")
-                        onTextChanged: checkAndSetLoginButtonStatus()
+                        onTextChanging: formContainer.checkAndSetLoginButtonStatus()
                     }
                 }
                 SpacedContainer {
@@ -41,7 +42,7 @@ NavigationPane {
                         inputMode: TextFieldInputMode.Password
                         label: qsTr("Password")
                         hintText: qsTr("Enter your password here")
-                        onTextChanged: checkAndSetLoginButtonStatus()
+                        onTextChanging: formContainer.checkAndSetLoginButtonStatus()
                     }
                 }
                 SpacedContainer {
