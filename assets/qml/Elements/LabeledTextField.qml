@@ -1,6 +1,10 @@
 import bb.cascades 1.4
 
 Container {
+    id: labeledTextField
+
+    signal textChanging();
+
     property alias label: label.text
     property alias text: textField.text
     property alias inputMode: textField.inputMode
@@ -19,5 +23,6 @@ Container {
         textStyle.fontSize: FontSize.Large
         accessibility.labelledBy: label
         text: ""
+        onTextChanging: labeledTextField.textChanging()
     }
 }
