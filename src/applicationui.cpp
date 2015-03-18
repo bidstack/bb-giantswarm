@@ -62,16 +62,21 @@ ApplicationUI::ApplicationUI() : QObject()
     AbstractPane *root;
     QmlDocument *qml;
 
-    if (false) {
+    bool connectFinishedEvent;
+    if (m_giantswarm->isLoggedIn()) {
         qml = QmlDocument::create("asset:///qml/main.qml").parent(this);
-        root = qml->createRootObject<AbstractPane>();
+        connectFinishedEvent = false;
     } else {
         qml = QmlDocument::create("asset:///qml/Login/LoginPage.qml").parent(this);
-        root = qml->createRootObject<AbstractPane>();
-        qml->connect(root, SIGNAL(finished()), this, SLOT(onSetupFinished()));
+        connectFinishedEvent = true;
     }
 
     qml->setContextProperty("giantswarm", m_giantswarm);
+    root = qml->createRootObject<AbstractPane>();
+
+    if (connectFinishedEvent) {
+        qml->connect(root, SIGNAL(finished()), this, SLOT(onSetupFinished()));
+    }
 
     // Set created root object as the application scene
     Application::instance()->setScene(root);
