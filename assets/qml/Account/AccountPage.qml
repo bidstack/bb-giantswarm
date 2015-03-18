@@ -56,6 +56,7 @@ Page {
                 inputMode: TextFieldInputMode.Password
                 hintText: qsTr("Enter your password here")
                 text: ""
+                active: false
             }
         }
     }
