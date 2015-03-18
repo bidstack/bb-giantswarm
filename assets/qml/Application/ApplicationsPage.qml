@@ -61,7 +61,7 @@ NavigationPane {
                         giantswarm.getAllApplications().map(function (application) {
                             return {
                                 name: application["application"],
-                                environment: application["environment"],
+                                environment: application["company"] + "/" + application["environment"],
                                 status: "unknown" // TODO
                             };
                         })

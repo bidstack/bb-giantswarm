@@ -128,8 +128,10 @@ NavigationPane {
                 }
                 onCreationCompleted: {
                     environmentsDataModel.insertList(
-                        giantswarm.getEnvironments().map(function (environmentName) {
-                            return { name: environmentName };
+                        giantswarm.getEnvironments().map(function (environment) {
+                            return {
+                                name: environment["company_name"] + "/" + environment["name"]
+                            };
                         })
                     );
                 }
