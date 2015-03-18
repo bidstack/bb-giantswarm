@@ -68,7 +68,7 @@ NavigationPane {
                     );
                 }
                 onTriggered: {
-                    navigation.push(Qt.createComponent(
+                    nav.push(Qt.createComponent(
                         "ApplicationPage.qml"
                     ).createObject(nav, {
                         application: applicationsDataModel.data(indexPath)
