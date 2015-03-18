@@ -58,7 +58,7 @@ NavigationPane {
                 }
                 onCreationCompleted: {
                     applicationsDataModel.insertList(
-                        giantswarm.getApplications().map(function (application) {
+                        giantswarm.getAllApplications().map(function (application) {
                             return {
                                 name: application["application"],
                                 environment: application["environment"],
