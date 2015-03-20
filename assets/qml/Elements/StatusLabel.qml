@@ -2,11 +2,11 @@ import bb.cascades 1.4
 
 Label {
     property string status;
-    
+
     text: status
     textStyle.fontSize: FontSize.Small
-    
-    onCreationCompleted: {
+
+    onStatusChanged: {
         if (status == "up") {
             textStyle.color = Color.Green
         } else if (status == "starting") {
