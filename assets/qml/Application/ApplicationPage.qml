@@ -3,7 +3,9 @@ import bb.cascades 1.4
 import "../Elements"
 
 Page {
-    property variant application;
+    property string application_name;
+    property string company_name;
+    property string environment_name;
     titleBar: TitleBar {
         title: qsTr("Application")
         acceptAction: ActionItem {
@@ -26,7 +28,7 @@ Page {
             }
             Container {
                 Label {
-                    text: application["name"]
+                    text: application_name
                     textStyle.fontSize: FontSize.Large
                     bottomMargin: ui.du(0)
                 }
@@ -41,7 +43,8 @@ Page {
                         rightMargin: ui.du(0)
                     }
                     StatusLabel {
-                        status: application["status"]
+                        id: statusLabel
+                        status: "unknown"
                         leftMargin: ui.du(0)
                     }
                 }
@@ -85,10 +88,14 @@ Page {
                 }
             }
             onCreationCompleted: {
-                servicesDataModel.insertList([
-                    { name: "website", status: "starting" },
-                    { name: "api", status: "failed" }
-                ]);
+                var application = giantswarm.getApplicationStatus(
+                    company_name,
+                    environment_name,
+                    application_name
+                );
+
+                statusLabel.status = application["status"];
+                servicesDataModel.insertList(application["services"]);
             }
             onTriggered: {
                 nav.push(Qt.createComponent(

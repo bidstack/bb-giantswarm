@@ -36,12 +36,12 @@ NavigationPane {
                                 }
                                 verticalAlignment: VerticalAlignment.Center
                                 Label {
-                                    text: ListItemData.name
+                                    text: ListItemData.application_name
                                     textStyle.fontSize: FontSize.Large
                                     bottomMargin: 0
                                 }
                                 Label {
-                                    text: ListItemData.environment
+                                    text: ListItemData.company_name + "/" + ListItemData.environment_name
                                     verticalAlignment: VerticalAlignment.Center
                                     textStyle.fontSize: FontSize.Small
                                     textStyle.color: Color.Gray
@@ -60,9 +60,9 @@ NavigationPane {
                     applicationsDataModel.insertList(
                         giantswarm.getAllApplications().map(function (application) {
                             return {
-                                name: application["application"],
-                                environment: application["company"] + "/" + application["environment"],
-                                status: "unknown" // TODO
+                                application_name: application["application"],
+                                company_name: application["company"],
+                                environment_name: application["environment"]
                             };
                         })
                     );
@@ -70,9 +70,9 @@ NavigationPane {
                 onTriggered: {
                     nav.push(Qt.createComponent(
                         "ApplicationPage.qml"
-                    ).createObject(nav, {
-                        application: applicationsDataModel.data(indexPath)
-                    }));
+                    ).createObject(nav, applicationsDataModel.data(
+                        indexPath
+                    )));
                 }
             }
         }

@@ -29,7 +29,7 @@ Page {
                     spaceQuota: 1
                 }
                 Label {
-                    text: instance["name"]
+                    text: instance["id"]
                     textStyle.fontSize: FontSize.Large
                     bottomMargin: ui.du(0)
                 }
