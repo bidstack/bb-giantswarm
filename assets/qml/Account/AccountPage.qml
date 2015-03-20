@@ -8,6 +8,7 @@ Page {
         title: qsTr("Account")
         acceptAction: ActionItem {
             title: qsTr("Save")
+            enabled: false // TODO: New API method needed to update both (email & password)
             attachedObjects: [
                 SystemToast {
                     id: accountCouldNotBeSavedToast
@@ -34,7 +35,7 @@ Page {
                 label: qsTr("Username")
                 inputMode: TextFieldInputMode.Text
                 hintText: qsTr("Enter your username here")
-                text: "bidstack"
+                text: ""
                 active: false
             }
         }
@@ -44,7 +45,7 @@ Page {
                 label: qsTr("Email")
                 inputMode: TextFieldInputMode.EmailAddress
                 hintText: qsTr("Enter your email here")
-                text: "info@bidstack.io"
+                text: ""
                 active: false
             }
         }
@@ -55,7 +56,13 @@ Page {
                 inputMode: TextFieldInputMode.Password
                 hintText: qsTr("Enter your password here")
                 text: ""
+                active: false
             }
         }
+    }
+    onCreationCompleted: {
+        var user = giantswarm.getUser();
+        emailTextField.text = user["email"];
+        usernameTextField.text = user["name"];
     }
 }

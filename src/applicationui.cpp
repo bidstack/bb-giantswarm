@@ -25,7 +25,6 @@
 #include <bb/system/SystemUiPosition>
 
 #include "activeframe.hpp"
-#include "bidstack/giantswarm/giantswarmclient.hpp"
 
 using namespace bb::cascades;
 using namespace bb::system;
@@ -34,9 +33,13 @@ using namespace Bidstack::Giantswarm;
 
 ApplicationUI::ApplicationUI() : QObject()
 {
-    // prepare the localization
+    QSqlDatabase connection = QSqlDatabase::addDatabase("QSQLITE", "giantswarm");
+    connection.setDatabaseName("./data/giantswarm.db");
+    connection.open();
+
     m_pTranslator = new QTranslator(this);
     m_pLocaleHandler = new LocaleHandler(this);
+    m_giantswarm = new GiantswarmClient(connection);
 
     bool res = QObject::connect(
         m_pLocaleHandler, SIGNAL(systemLanguageChanged()),
@@ -53,24 +56,25 @@ ApplicationUI::ApplicationUI() : QObject()
     ActiveFrame* activeFrame = new ActiveFrame();
     Application::instance()->setCover(activeFrame);
 
-    QSqlDatabase connection = QSqlDatabase::addDatabase("QSQLITE", "giantswarm");
-    connection.setDatabaseName("./data/giantswarm.db");
-    connection.open();
-
-    GiantswarmClient giantswarm(connection);
-    qDebug() << "Ping:" << (giantswarm.ping() ? "successful" : "failed");
-
     // Create scene document from main.qml asset, the parent is set
     // to ensure the document gets destroyed properly at shut down.
 
     AbstractPane *root;
+    QmlDocument *qml;
 
-    if (false) {
-        QmlDocument *qml = QmlDocument::create("asset:///qml/main.qml").parent(this);
-        root = qml->createRootObject<AbstractPane>();
+    bool connectFinishedEvent;
+    if (m_giantswarm->isLoggedIn()) {
+        qml = QmlDocument::create("asset:///qml/main.qml").parent(this);
+        connectFinishedEvent = false;
     } else {
-        QmlDocument *qml = QmlDocument::create("asset:///qml/Login/LoginPage.qml").parent(this);
-        root = qml->createRootObject<AbstractPane>();
+        qml = QmlDocument::create("asset:///qml/Login/LoginPage.qml").parent(this);
+        connectFinishedEvent = true;
+    }
+
+    qml->setContextProperty("giantswarm", m_giantswarm);
+    root = qml->createRootObject<AbstractPane>();
+
+    if (connectFinishedEvent) {
         qml->connect(root, SIGNAL(finished()), this, SLOT(onSetupFinished()));
     }
 
@@ -94,6 +98,8 @@ void ApplicationUI::onSystemLanguageChanged()
 void ApplicationUI::onSetupFinished()
 {
     QmlDocument *qml = QmlDocument::create("asset:///qml/main.qml").parent(this);
+    qml->setContextProperty("giantswarm", m_giantswarm);
+
     AbstractPane *root = qml->createRootObject<AbstractPane>();
     Application::instance()->setScene(root);
 

@@ -19,6 +19,10 @@
 
 #include <QObject>
 
+#include "bidstack/giantswarm/giantswarmclient.hpp"
+
+using namespace Bidstack::Giantswarm;
+
 namespace bb
 {
     namespace cascades
@@ -46,6 +50,7 @@ private slots:
 private:
     QTranslator* m_pTranslator;
     bb::cascades::LocaleHandler* m_pLocaleHandler;
+    GiantswarmClient *m_giantswarm;
 };
 
 #endif /* ApplicationUI_HPP_ */

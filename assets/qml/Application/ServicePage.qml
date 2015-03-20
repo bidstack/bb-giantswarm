@@ -85,10 +85,7 @@ Page {
                 }
             }
             onCreationCompleted: {
-                componentsDataModel.insertList([
-                    { name: "nginx", status: "up" },
-                    { name: "rails", status: "up" }
-                ]);
+                componentsDataModel.insertList(service["components"]);
             }
             onTriggered: {
                 nav.push(Qt.createComponent(

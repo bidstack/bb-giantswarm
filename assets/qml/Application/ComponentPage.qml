@@ -72,7 +72,7 @@ Page {
                             layoutProperties: StackLayoutProperties {
                                 spaceQuota: 1
                             }
-                            text: ListItemData.name
+                            text: ListItemData.id
                             textStyle.fontSize: FontSize.Large
                             verticalAlignment: VerticalAlignment.Center
                         }
@@ -85,11 +85,7 @@ Page {
                 }
             }
             onCreationCompleted: {
-                instancesDataModel.insertList([
-                    { name: "c6ef55dc-d501-4669-b175-34b5c112ba79", status: "up" },
-                    { name: "37df40f4-fd6d-4b60-a662-d7d61ec0741c", status: "starting" },
-                    { name: "7a1f51cf-33b7-4a5b-b101-c943dcc8b48a", status: "failed" }
-                ]);
+                instancesDataModel.insertList(component["instances"]);
             }
             onTriggered: {
                 nav.push(Qt.createComponent(

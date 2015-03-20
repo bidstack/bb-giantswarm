@@ -30,19 +30,19 @@ Sheet {
                     }
                 ]
                 onTriggered: {
-                    var companyName = companyDropDown.value;
-                    var environmentName = environmentTextField.text;
+                    var companyName = companyDropDown.value
+                      , environmentName = environmentTextField.text;
 
-                    if (true) {
-                        if (true) {
+                    if (giantswarm.hasEnvironment(companyName, environmentName)) {
+                        if (giantswarm.createEnvironment(companyName, environmentName)) {
                             sheet.environmentCreated(companyName, environmentName);
                             environmentHasSuccessfullyBeenCreatedToast.show();
                             sheet.close();
                         } else {
-                            environmentAlreadyExistentToast.show();
+                            environmentCouldNotBeCreatedToast.show();
                         }
                     } else {
-                        environmentCouldNotBeCreatedToast.show();
+                        environmentAlreadyExistentToast.show();
                     }
                 }
             }
@@ -66,8 +66,9 @@ Sheet {
                         }
                     }
                     onCreationCompleted: {
-                        addOption("bidstack");
-                        addOption("giantswarm");
+                        giantswarm.getCompanies().forEach(function (companyName) {
+                            addOption(companyName);
+                        });
                     }
                 }
             }
